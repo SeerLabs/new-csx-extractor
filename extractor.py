@@ -10,7 +10,7 @@ class GrobidExtractor(Extractor):
    def extract(self, data, dep_results):
 
       files = {'input': data}
-      vars = {'consolidate': 1}
+      vars = {}
       url = 'http://localhost:8080/processFulltextDocument'
       try:
          resp = requests.post(url, files=files, data=vars)
