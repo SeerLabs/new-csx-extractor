@@ -1,11 +1,10 @@
 from extraction.core import ExtractionRunner
 from extraction.runnables import Extractor, RunnableError, Filter
 import extraction.utils as utils
-import tempfile
-import os
-import glob
 import subprocess32 as subprocess
+import os
 import requests
+import re
 
 class GrobidExtractor(Extractor):
    def extract(self, data, dep_results):
@@ -24,13 +23,25 @@ class GrobidExtractor(Extractor):
       result_str = '\n'.join(results.split('\n')[1:])
       return result_str
 
-class AcademicPaperFilter(Filter):
+class PlainTextExtractor(Extractor):
    @staticmethod
    def dependencies():
       return [GrobidExtractor]
 
+   def extract(self, data, dep_results):
+      xml_text = dep_results[GrobidExtractor]
+      remove_tags = re.compile(r'\s*<.*?>', re.DOTALL | re.UNICODE)
+      plain_text = remove_tags.sub('\n', xml_text)
+      return plain_text
+
+
+class AcademicPaperFilter(Filter):
+   @staticmethod
+   def dependencies():
+      return [PlainTextExtractor]
+
    def filter(self, data, dep_results):
-      plain_text = dep_results[GrobidExtractor]
+      plain_text = dep_results[PlainTextExtractor]
       return  ('REFERENCES' in plain_text or
                'References' in plain_text or
                'Bibliography' in plain_text or
@@ -48,7 +59,8 @@ class TableExtractor(Extractor):
 
 if __name__ == '__main__':
    runner = ExtractionRunner()
-   runner.add_runnable(GrobidExtractor)
+   runner.add_runnable(GrobidExtractor, include_in_output=False)
+   runner.add_runnable(PlainTextExtractor)
    runner.add_runnable(AcademicPaperFilter)
    runner.add_runnable(TableExtractor)
 
