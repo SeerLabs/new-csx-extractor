@@ -1,4 +1,5 @@
 from extraction.runnables import Extractor, RunnableError, ExtractorResult
+import interfaces
 import extraction.utils as utils
 import subprocess32 as subprocess
 import defusedxml.ElementTree as safeET
@@ -10,7 +11,7 @@ import re
 
 PDF_BOX_JAR = os.path.expanduser('~/bin/pdfbox-app-1.8.4.jar')
 
-class PlainTextExtractor(Extractor):
+class PDFBoxPlainTextExtractor(interfaces.PlainTextExtractor):
    def extract(self, data, dep_results):
       file_path = utils.temp_file(data, suffix='.pdf')
       

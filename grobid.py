@@ -1,4 +1,5 @@
 from extraction.runnables import Extractor, RunnableError, ExtractorResult
+import interfaces
 import defusedxml.ElementTree as safeET
 import xml.etree.ElementTree as ET
 import requests
@@ -6,7 +7,7 @@ import re
 
 GROBID_HOST = 'http://localhost:8080'
 
-class PlainTextExtractor(Extractor):
+class GrobidPlainTextExtractor(interfaces.PlainTextExtractor):
    def extract(self, data, dep_results):
 
       url = '{0}/processFulltextDocument'.format(GROBID_HOST)
