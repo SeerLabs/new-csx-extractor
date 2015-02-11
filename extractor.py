@@ -6,11 +6,21 @@ import grobid
 import pdfbox
 import filters
 
-if __name__ == '__main__':
+def get_extraction_runner():
 
    runner = ExtractionRunner()
-   runner.add_runnable(pdfbox.PDFBoxPlainTextExtractor)
+
+   runner.add_runnable(grobid.GrobidPlainTextExtractor)
+   # OR
+   # runner.add_runnable(pdfbox.PDFBoxPlainTextExtractor)
+
    runner.add_runnable(filters.AcademicPaperFilter)
+
+   return runner
+
+
+if __name__ == '__main__':
+   runner = get_extraction_runner()
 
    argc = len(sys.argv)
    if argc == 2:
