@@ -10,3 +10,11 @@ class PlainTextExtractor(Extractor):
    #      first decode it to utf-8
    def extract(self, data, dependency_results):
       raise NotImplementedError('Extend me!')
+
+class TEIExtractor(Extractor):
+   # Extractors extending the extractor should:
+   # return an ExtractorResult object such that
+   #  xml_result is the root node of a TEI xml document
+   def extract(self, data, dependency_results):
+      raise NotImplementedError('Extend me!')
+

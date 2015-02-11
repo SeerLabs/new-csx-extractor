@@ -8,7 +8,7 @@ import re
 
 GROBID_HOST = 'http://localhost:8080'
 
-class GrobidPlainTextExtractor(interfaces.PlainTextExtractor):
+class GrobidTEIExtractor(interfaces.TEIExtractor):
    def extract(self, data, dep_results):
 
       url = '{0}/processFulltextDocument'.format(GROBID_HOST)
@@ -23,22 +23,11 @@ class GrobidPlainTextExtractor(interfaces.PlainTextExtractor):
       if resp.status_code != 200:
          raise RunnableError('Grobid returned status {0} instead of 200\nPossible Error:\n{1}'.format(resp.status_code, resp.text))
 
-      xml_text = resp.text
+      xml_text = resp.content
+      xml = safeET.fromstring(xml_text)
 
       # grobid returns TEI xml file
       # we will 'convert' it to plain text be removing all xml tags
-      remove_tags = re.compile(r'\s*<.*?>', re.DOTALL | re.UNICODE)
-      plain_text = remove_tags.sub('\n', xml_text)
-      # run this twice for weird situations where things are double escaped
-      plain_text = xmlutils.unescape(plain_text, {'&apos;': "'", '&quot;': '"'})
-      plain_text = xmlutils.unescape(plain_text, {'&apos;': "'", '&quot;': '"'})
+      return ExtractorResult(xml_result=xml)
 
-      # create xml result file that just points towards file of plain text
-      root=ET.Element('file')
-      root.text = 'plain_text.txt'
-
-      plain_text = plain_text.encode('utf-8')
-      files = {'plain_text.txt': plain_text}
-
-      return ExtractorResult(xml_result=root, files=files)
 

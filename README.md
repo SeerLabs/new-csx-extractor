@@ -2,7 +2,7 @@ Repo for extraction code for CiteSeerX
 
 Usage:
 
-    python extractor.py /path/to/file.pdf [path/to/output/dir]
+    python run_extraction.py /path/to/file.pdf [path/to/output/dir]
 
 If a path to an output directory is not supplied, results will be put in the same directory
 as the pdf file.

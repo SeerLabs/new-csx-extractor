@@ -4,14 +4,18 @@ import os
 import sys
 import grobid
 import pdfbox
+import extractors
 import filters
 
 def get_extraction_runner():
 
    runner = ExtractionRunner()
 
-   runner.add_runnable(grobid.GrobidPlainTextExtractor)
+   # Option 1
+   runner.add_runnable(grobid.GrobidTEIExtractor)
+   runner.add_runnable(extractors.TEItoPlainTextExtractor)
    # OR
+   # Option 2
    # runner.add_runnable(pdfbox.PDFBoxPlainTextExtractor)
 
    runner.add_runnable(filters.AcademicPaperFilter)
