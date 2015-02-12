@@ -1,6 +1,6 @@
 # New CiteSeerX Extraction Implementation #
 
-Usage:
+## Usage ##
 
     python run_extraction.py /path/to/file.pdf [path/to/output/dir]
 
