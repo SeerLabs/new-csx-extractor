@@ -1,7 +1,6 @@
 from extraction.runnables import Extractor, Filter
 
 class PlainTextExtractor(Extractor):
-   # Contract:
    # Extractors extending this extractor should:
    # return an ExtractorResult such that
    #    xml_result is a node named 'file' with content 'plain_text.txt'
@@ -11,10 +10,17 @@ class PlainTextExtractor(Extractor):
    def extract(self, data, dependency_results):
       raise NotImplementedError('Extend me!')
 
-class TEIExtractor(Extractor):
+class FullTextTEIExtractor(Extractor):
    # Extractors extending the extractor should:
    # return an ExtractorResult object such that
    #  xml_result is the root node of a TEI xml document
+   # The TEI document should contain header, text, and reference information
+   def extract(self, data, dependency_results):
+      raise NotImplementedError('Extend me!')
+
+class CSXHeaderExtractor(Extractor):
+   # Returns an ExtractorResult object such that
+   #   xml_result is an xml document containing header info in the CSX ingestion format
    def extract(self, data, dependency_results):
       raise NotImplementedError('Extend me!')
 

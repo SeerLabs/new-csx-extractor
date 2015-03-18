@@ -8,7 +8,7 @@ import re
 
 GROBID_HOST = 'http://localhost:8080'
 
-class GrobidTEIExtractor(interfaces.TEIExtractor):
+class GrobidTEIExtractor(interfaces.FullTextTEIExtractor):
    def extract(self, data, dep_results):
 
       url = '{0}/processFulltextDocument'.format(GROBID_HOST)
@@ -24,10 +24,12 @@ class GrobidTEIExtractor(interfaces.TEIExtractor):
          raise RunnableError('Grobid returned status {0} instead of 200\nPossible Error:\n{1}'.format(resp.status_code, resp.text))
 
       xml_text = resp.content
+      # remove namespace info from xml string
+      # this is hacky but makes parsing it much much nicer down the road
+      remove_xmlns = re.compile(r'\sxmlns[^"]+"[^"]+"')
+      xml_text = remove_xmlns.sub('', xml_text)
+
       xml = safeET.fromstring(xml_text)
 
       # grobid returns TEI xml file
-      # we will 'convert' it to plain text be removing all xml tags
       return ExtractorResult(xml_result=xml)
-
-
