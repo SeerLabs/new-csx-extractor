@@ -1,10 +1,11 @@
 from extraction.runnables import Extractor, RunnableError, ExtractorResult
 import interfaces
+import utils
 import defusedxml.ElementTree as safeET
 import xml.etree.ElementTree as ET
-import xml.sax.saxutils as xmlutils
 import requests
 import re
+
 
 class TEItoPlainTextExtractor(interfaces.PlainTextExtractor):
    @staticmethod
@@ -15,11 +16,7 @@ class TEItoPlainTextExtractor(interfaces.PlainTextExtractor):
       xml_root = dependency_results[interfaces.FullTextTEIExtractor].xml_result
       xml_string = ET.tostring(xml_root).decode('utf-8')
 
-      remove_tags = re.compile(r'\s*<.*?>', re.DOTALL | re.UNICODE)
-      plain_text = remove_tags.sub('\n', xml_string)
-      # run this twice for weird situations where things are double escaped
-      plain_text = xmlutils.unescape(plain_text, {'&apos;': "'", '&quot;': '"'})
-      plain_text = xmlutils.unescape(plain_text, {'&apos;': "'", '&quot;': '"'})
+      plain_text = utils.xml_to_plain_text(xml_string)
 
       # create xml result file that just points towards file of plain text
       root=ET.Element('file')
@@ -71,6 +68,20 @@ class TEItoHeaderExtractor(interfaces.CSXHeaderExtractor):
             ET.SubElement(keywords_node, 'keyword').text = term.text
       else:
          self.log('No keywords found')
+
+      # Try and find an abstract
+      divs = tei_root.findall('./text//div')
+      abstracts = [div for div in divs if div.get('type') == 'abstract']
+      if abstracts:
+         abstract_node = abstracts[0]
+         xml_string = ET.tostring(abstract_node)
+         remove_heading = re.compile(r'\s*<head.*?>.*?<\s*/\s*head>', re.DOTALL | re.UNICODE)
+         xml_string = remove_heading.sub('', xml_string)
+         abstract_string = utils.xml_to_plain_text(xml_string)
+
+         ET.SubElement(result_root, 'abstract').text = abstract_string
+      else:
+         self.log('No abstract found')
 
       # CSX style xml document of header information
       return ExtractorResult(xml_result=result_root)
