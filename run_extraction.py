@@ -10,6 +10,7 @@ import filters
 def get_extraction_runner():
 
    runner = ExtractionRunner()
+   runner.enable_logging('~/results', '~/runnables')
 
    # Option 1
    runner.add_runnable(grobid.GrobidTEIExtractor)

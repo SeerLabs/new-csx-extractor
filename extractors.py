@@ -60,8 +60,7 @@ class TEItoHeaderExtractor(interfaces.CSXHeaderExtractor):
             name = ' '.join(name_parts)
             ET.SubElement(author_node, 'name').text = name
       else:
-         # Not a critical error if there are no authors
-         pass
+         self.log('No authors found')
 
 
       # Retreive keywords from TEI doc
@@ -71,8 +70,7 @@ class TEItoHeaderExtractor(interfaces.CSXHeaderExtractor):
          for term in keywords:
             ET.SubElement(keywords_node, 'keyword').text = term.text
       else:
-         #No keywords found, not a cirtical error
-         pass
+         self.log('No keywords found')
 
       # CSX style xml document of header information
       return ExtractorResult(xml_result=result_root)
