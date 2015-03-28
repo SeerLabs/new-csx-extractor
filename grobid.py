@@ -9,6 +9,9 @@ import re
 GROBID_HOST = 'http://localhost:8080'
 
 class GrobidTEIExtractor(interfaces.FullTextTEIExtractor):
+
+   result_file_name = '.tei'
+
    def extract(self, data, dep_results):
 
       url = '{0}/processFulltextDocument'.format(GROBID_HOST)

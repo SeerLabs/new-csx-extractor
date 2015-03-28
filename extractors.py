@@ -8,6 +8,7 @@ import re
 
 
 class TEItoPlainTextExtractor(interfaces.PlainTextExtractor):
+
    dependencies = frozenset([interfaces.FullTextTEIExtractor])
 
    def extract(self, data, dependency_results):
@@ -16,16 +17,14 @@ class TEItoPlainTextExtractor(interfaces.PlainTextExtractor):
 
       plain_text = utils.xml_to_plain_text(xml_string)
 
-      # create xml result file that just points towards file of plain text
-      root=ET.Element('file')
-      root.text = 'plain_text.txt'
-
       plain_text = plain_text.encode('utf-8')
-      files = {'plain_text.txt': plain_text}
+      files = {'.txt': plain_text}
 
-      return ExtractorResult(xml_result=root, files=files)
+      return ExtractorResult(xml_result=None, files=files)
 
 class TEItoHeaderExtractor(interfaces.CSXHeaderExtractor):
+
+   result_file_name = '.header'
    dependencies = frozenset([interfaces.FullTextTEIExtractor])
 
    # Essentilly this whole method just finds the relative info in the Grobid TEI xml file

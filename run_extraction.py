@@ -30,9 +30,11 @@ if __name__ == '__main__':
 
    argc = len(sys.argv)
    if argc == 2:
-      runner.run_from_file(sys.argv[1])
+      file_name = os.path.splitext(os.path.basename(sys.argv[1]))[0]
+      runner.run_from_file(sys.argv[1], file_prefix=file_name)
    elif argc == 3:
-      runner.run_from_file(sys.argv[1], output_dir = sys.argv[2])
+      file_name = os.path.splitext(os.path.basename(sys.argv[1]))[0]
+      runner.run_from_file(sys.argv[1], output_dir = sys.argv[2], file_prefix=file_name)
    else:
       print("USAGE: python {0} path_to_pdf [output_directory]".format(sys.argv[0]))
 

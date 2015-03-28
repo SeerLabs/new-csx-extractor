@@ -12,6 +12,7 @@ import re
 PDF_BOX_JAR = os.path.expanduser('~/bin/pdfbox-app-1.8.4.jar')
 
 class PDFBoxPlainTextExtractor(interfaces.PlainTextExtractor):
+
    def extract(self, data, dep_results):
       file_path = utils.temp_file(data, suffix='.pdf')
       
