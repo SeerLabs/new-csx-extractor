@@ -2,9 +2,7 @@ from extraction.runnables import Filter
 import interfaces
 
 class AcademicPaperFilter(Filter):
-   @staticmethod
-   def dependencies():
-      return [interfaces.PlainTextExtractor]
+   dependencies = frozenset([interfaces.PlainTextExtractor])
 
    def filter(self, data, dep_results):
       plain_text = dep_results[interfaces.PlainTextExtractor].files['plain_text.txt'].decode('utf-8')

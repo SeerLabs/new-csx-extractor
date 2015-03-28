@@ -8,9 +8,7 @@ import re
 
 
 class TEItoPlainTextExtractor(interfaces.PlainTextExtractor):
-   @staticmethod
-   def dependencies():
-      return [interfaces.FullTextTEIExtractor]
+   dependencies = frozenset([interfaces.FullTextTEIExtractor])
 
    def extract(self, data, dependency_results):
       xml_root = dependency_results[interfaces.FullTextTEIExtractor].xml_result
@@ -28,9 +26,7 @@ class TEItoPlainTextExtractor(interfaces.PlainTextExtractor):
       return ExtractorResult(xml_result=root, files=files)
 
 class TEItoHeaderExtractor(interfaces.CSXHeaderExtractor):
-   @staticmethod
-   def dependencies():
-      return [interfaces.FullTextTEIExtractor]
+   dependencies = frozenset([interfaces.FullTextTEIExtractor])
 
    # Essentilly this whole method just finds the relative info in the Grobid TEI xml file
    # and writes it into the CSX format xml file
