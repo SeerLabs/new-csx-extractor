@@ -2,10 +2,10 @@ from extraction.core import ExtractionRunner
 from extraction.runnables import Extractor, RunnableError, Filter, ExtractorResult
 import os
 import sys
-import grobid
-import pdfbox
-import extractors
-import filters
+import csxextract.grobid as grobid
+import csxextract.pdfbox as pdfbox
+import csxextract.extractors as extractors
+import csxextract.filters as filters
 
 def get_extraction_runner():
 
