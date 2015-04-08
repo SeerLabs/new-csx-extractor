@@ -13,7 +13,12 @@ class TEItoPlainTextExtractor(interfaces.PlainTextExtractor):
 
    def extract(self, data, dependency_results):
       xml_root = dependency_results[interfaces.FullTextTEIExtractor].xml_result
-      xml_string = ET.tostring(xml_root).decode('utf-8')
+      body_node = xml_root.find('./text/body')
+
+      if body_node is None:
+         return RunnableError('Could not find body text in TEI xml file')
+
+      xml_string = ET.tostring(body_node).decode('utf-8')
 
       plain_text = utils.xml_to_plain_text(xml_string)
 
