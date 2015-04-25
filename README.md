@@ -13,6 +13,7 @@ as the pdf file.
    * [extraction framework python library][1] (on python path (run `python setup.py install --user` from its root directory)
    * [defusedxml python library][2] (run `pip install defusedxml --user` to install)
    * [requests python library][3] (run `pip install requests --user` to install)
+ 
 #### Grobid ####
 [Grobid][4] is used to extract header information from the PDF files. Grobid should be running as a service somwhere. (Run `mvn jetty:run-war` from `grobid-service` directory if not already running. See Grobid's Github project for more complete [installation instructions][5].) The URL for Grobid can be configured in `csxextract/config.py`.
 
