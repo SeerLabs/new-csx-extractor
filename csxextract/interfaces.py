@@ -24,3 +24,9 @@ class CSXHeaderExtractor(Extractor):
    def extract(self, data, dependency_results):
       raise NotImplementedError('Extend me!')
 
+class CSXCitationExtractor(Extractor):
+   # Returns an ExtractorResult object such that
+   #   xml_result is an xml document containing citation info in the CSX ingestion format
+   def extract(self, data, dependency_results):
+      raise NotImplementedError('Extend me!')
+

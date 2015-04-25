@@ -1,11 +1,39 @@
 from extraction.runnables import Extractor, RunnableError, ExtractorResult
+import extraction.utils
+import config
 import interfaces
 import utils
 import defusedxml.ElementTree as safeET
 import xml.etree.ElementTree as ET
 import requests
+import os
 import re
 
+class ParsCitCitationExtractor(interfaces.CSXCitationExtractor):
+
+   result_file_name = '.cite'
+   # this extractor needs a PlainTextExtractor to have run before it
+   dependencies = frozenset([interfaces.PlainTextExtractor])
+
+   def extract(Self, data, dependency_results):
+      # Get the plain text file of the PDF and write it to a temporary location
+      text = dependency_results[interfaces.PlainTextExtractor].files['.txt']
+      path = extraction.utils.temp_file(text)
+
+      # Run parscit on the text file to extract citations
+      status, stdout, stderr = extraction.utils.external_process(['perl', config.PARSCIT_PATH, path], timeout=20)
+
+      if status != 0:
+         raise RunnableError('ParsCit Failure')
+
+      # Convert string result into an xml object
+      xml = safeET.fromstring(stdout)
+
+      # delete temporary text file
+      os.remove(path)
+
+      return ExtractorResult(xml_result=xml)
+      
 
 class TEItoPlainTextExtractor(interfaces.PlainTextExtractor):
 

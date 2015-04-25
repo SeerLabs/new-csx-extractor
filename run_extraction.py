@@ -14,11 +14,13 @@ def get_extraction_runner():
 
    # Option 1
    runner.add_runnable(grobid.GrobidTEIExtractor)
-   runner.add_runnable(extractors.TEItoPlainTextExtractor)
    runner.add_runnable(extractors.TEItoHeaderExtractor)
+   runner.add_runnable(pdfbox.PDFBoxPlainTextExtractor)
+   runner.add_runnable(extractors.ParsCitCitationExtractor)
    # OR
    # Option 2
-   # runner.add_runnable(pdfbox.PDFBoxPlainTextExtractor)
+   # But the plain text isn't that good this way
+   # runner.add_runnable(extractors.TEItoPlainTextExtractor)
 
    runner.add_runnable(filters.AcademicPaperFilter)
 

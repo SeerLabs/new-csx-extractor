@@ -30,9 +30,6 @@ class PDFBoxPlainTextExtractor(interfaces.PlainTextExtractor):
       plain_text = stdout
 
       # create xml result file that just points towards the file with plain text results
-      root=ET.Element('file')
-      root.text = 'plain_text.txt'
+      files = {'.txt': stdout}
 
-      files = {'plain_text.txt': stdout}
-
-      return ExtractorResult(xml_result=root, files=files)
+      return ExtractorResult(xml_result=None, files=files)
