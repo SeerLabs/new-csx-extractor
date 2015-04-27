@@ -35,7 +35,7 @@ class GrobidHeaderTEIExtractor(interfaces.HeaderTEIExtractor):
       return ExtractorResult(xml_result=xml)
 
 
-def _call_grobid_method(method, data):
+def _call_grobid_method(data, method):
       url = '{0}/{1}'.format(config.GROBID_HOST, method)
       files = {'input': data}
       vars = {}

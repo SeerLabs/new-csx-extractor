@@ -58,13 +58,13 @@ class TEItoPlainTextExtractor(interfaces.PlainTextExtractor):
 class TEItoHeaderExtractor(interfaces.CSXHeaderExtractor):
 
    result_file_name = '.header'
-   dependencies = frozenset([interfaces.FullTextTEIExtractor])
+   dependencies = frozenset([interfaces.HeaderTEIExtractor])
 
    # Essentilly this whole method just finds the relative info in the Grobid TEI xml file
    # and writes it into the CSX format xml file
    # Perhaps this could be done with something like XSLT (hahahaha)
    def extract(self, data, dep_results):
-      tei_root = dep_results[interfaces.FullTextTEIExtractor].xml_result
+      tei_root = dep_results[interfaces.HeaderTEIExtractor].xml_result
       result_root = ET.Element('algorithm', {'name': 'Grobid Header Extraction', 'version': '0.1'})
 
       # Retreive title from TEI doc

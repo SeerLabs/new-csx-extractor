@@ -13,7 +13,7 @@ def get_extraction_runner():
    runner.enable_logging('~/logs/results', '~/logs/runnables')
 
    # Option 1
-   runner.add_runnable(grobid.GrobidTEIExtractor)
+   runner.add_runnable(grobid.GrobidHeaderTEIExtractor)
    runner.add_runnable(extractors.TEItoHeaderExtractor)
    runner.add_runnable(pdfbox.PDFBoxPlainTextExtractor)
    runner.add_runnable(extractors.ParsCitCitationExtractor)
@@ -22,7 +22,7 @@ def get_extraction_runner():
    # But the plain text isn't that good this way
    # runner.add_runnable(extractors.TEItoPlainTextExtractor)
 
-   runner.add_runnable(filters.AcademicPaperFilter)
+   # runner.add_runnable(filters.AcademicPaperFilter)
 
    return runner
 
