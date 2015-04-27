@@ -12,7 +12,31 @@ class GrobidTEIExtractor(interfaces.FullTextTEIExtractor):
    result_file_name = '.tei'
 
    def extract(self, data, dep_results):
-      url = '{0}/processFulltextDocument'.format(config.GROBID_HOST)
+      xml_text = _call_grobid_method(data, 'processFulltextDocument')
+
+      # remove namespace info from xml string
+      # this is hacky but makes parsing it much much nicer down the road
+      remove_xmlns = re.compile(r'\sxmlns[^"]+"[^"]+"')
+      xml_text = remove_xmlns.sub('', xml_text)
+
+      xml = safeET.fromstring(xml_text)
+
+      # grobid returns TEI xml file
+      return ExtractorResult(xml_result=xml)
+
+class GrobidHeaderTEIExtractor(interfaces.HeaderTEIExtractor):
+   result_file_name = '.header.tei'
+
+   def extract(self, data, dep_results):
+      xml_text = _call_grobid_method(data, 'processHeaderDocument')
+      remove_xmlns = re.compile(r'\sxmlns[^"]+"[^"]+"')
+      xml_text = remove_xmlns.sub('', xml_text)
+      xml = safeET.fromstring(xml_text)
+      return ExtractorResult(xml_result=xml)
+
+
+def _call_grobid_method(method, data):
+      url = '{0}/{1}'.format(config.GROBID_HOST, method)
       files = {'input': data}
       vars = {}
 
@@ -24,13 +48,5 @@ class GrobidTEIExtractor(interfaces.FullTextTEIExtractor):
       if resp.status_code != 200:
          raise RunnableError('Grobid returned status {0} instead of 200\nPossible Error:\n{1}'.format(resp.status_code, resp.text))
 
-      xml_text = resp.content
-      # remove namespace info from xml string
-      # this is hacky but makes parsing it much much nicer down the road
-      remove_xmlns = re.compile(r'\sxmlns[^"]+"[^"]+"')
-      xml_text = remove_xmlns.sub('', xml_text)
+      return resp.content
 
-      xml = safeET.fromstring(xml_text)
-
-      # grobid returns TEI xml file
-      return ExtractorResult(xml_result=xml)
