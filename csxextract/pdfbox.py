@@ -11,9 +11,10 @@ import requests
 import re
 
 
+# Returns a plain text version of a PDF file
 class PDFBoxPlainTextExtractor(interfaces.PlainTextExtractor):
-
    def extract(self, data, dep_results):
+      # Write the pdf data to a temporary location so PDFBox can process it
       file_path = utils.temp_file(data, suffix='.pdf')
       
       try:
@@ -27,9 +28,8 @@ class PDFBoxPlainTextExtractor(interfaces.PlainTextExtractor):
       if status != 0:
          raise RunnableError('PDFBox returned error status code {0}.\nPossible error:\n{1}'.format(status, stderr))
 
-      plain_text = stdout
-
-      # create xml result file that just points towards the file with plain text results
-      files = {'.txt': stdout}
+      # We can use result from PDFBox directly, no manipulation needed
+      pdf_plain_text = stdout
+      files = {'.txt': pdf_plain_text}
 
       return ExtractorResult(xml_result=None, files=files)

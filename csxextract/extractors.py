@@ -5,69 +5,54 @@ import interfaces
 import utils
 import defusedxml.ElementTree as safeET
 import xml.etree.ElementTree as ET
+import subprocess32 as subprocess
 import requests
 import os
 import re
 
+# Takes a plain text version of a PDF and uses ParsCit to extract citations
+# Returns an xml document of citation info in CSX format
 class ParsCitCitationExtractor(interfaces.CSXCitationExtractor):
+   dependencies = frozenset([interfaces.PlainTextExtractor])
 
    result_file_name = '.cite'
-   # this extractor needs a PlainTextExtractor to have run before it
-   dependencies = frozenset([interfaces.PlainTextExtractor])
 
    def extract(Self, data, dependency_results):
       # Get the plain text file of the PDF and write it to a temporary location
-      text = dependency_results[interfaces.PlainTextExtractor].files['.txt']
-      path = extraction.utils.temp_file(text)
+      pdf_text = dependency_results[interfaces.PlainTextExtractor].files['.txt']
+      text_file_path = extraction.utils.temp_file(pdf_text)
 
       # Run parscit on the text file to extract citations
-      status, stdout, stderr = extraction.utils.external_process(['perl', config.PARSCIT_PATH, path], timeout=20)
+      try:
+         status, stdout, stderr = extraction.utils.external_process(['perl', config.PARSCIT_PATH, text_file_path], timeout=20)
+      except subprocess.TimeoutExpired as te:
+         raise RunnableError('PDFBox timed out while processing document')
+      finally:
+         os.remove(text_file_path)
 
       if status != 0:
          raise RunnableError('ParsCit Failure')
 
-      # Convert string result into an xml object
+      # ParsCit will give us a string representing an xml doc
+      # convert from string type  into an xml object
       xml = safeET.fromstring(stdout)
-
-      # delete temporary text file
-      os.remove(path)
 
       return ExtractorResult(xml_result=xml)
       
 
-class TEItoPlainTextExtractor(interfaces.PlainTextExtractor):
-
-   dependencies = frozenset([interfaces.FullTextTEIExtractor])
-
-   def extract(self, data, dependency_results):
-      xml_root = dependency_results[interfaces.FullTextTEIExtractor].xml_result
-      body_node = xml_root.find('./text/body')
-
-      if body_node is None:
-         return RunnableError('Could not find body text in TEI xml file')
-
-      xml_string = ET.tostring(body_node).decode('utf-8')
-
-      plain_text = utils.xml_to_plain_text(xml_string)
-
-      plain_text = plain_text.encode('utf-8')
-      files = {'.txt': plain_text}
-
-      return ExtractorResult(xml_result=None, files=files)
-
+# Takes a TEI xml file of a document (at least containing header info)
+# and outputs an xml file containing header info in CSX format
 class TEItoHeaderExtractor(interfaces.CSXHeaderExtractor):
-
-   result_file_name = '.header'
    dependencies = frozenset([interfaces.HeaderTEIExtractor])
+   result_file_name = '.header'
 
-   # Essentilly this whole method just finds the relative info in the Grobid TEI xml file
+   # Essentilly this whole method just finds the relative info in the Grobid xml file
    # and writes it into the CSX format xml file
-   # Perhaps this could be done with something like XSLT (hahahaha)
    def extract(self, data, dep_results):
       tei_root = dep_results[interfaces.HeaderTEIExtractor].xml_result
       result_root = ET.Element('algorithm', {'name': 'Grobid Header Extraction', 'version': '0.1'})
 
-      # Retreive title from TEI doc
+      # Retrieve title from TEI doc
       title = tei_root.find('./teiHeader//titleStmt/title')
       if title is not None:
          ET.SubElement(result_root, 'title').text = title.text
@@ -134,6 +119,29 @@ class TEItoHeaderExtractor(interfaces.CSXHeaderExtractor):
 
       # CSX style xml document of header information
       return ExtractorResult(xml_result=result_root)
+
+# Takes a TEI xml file of a document and tries to generate a plain text version of the document
+# Right now it does this by simplying stripping out all xml tags
+# This isn't very accurate or good
+class TEItoPlainTextExtractor(interfaces.PlainTextExtractor):
+   dependencies = frozenset([interfaces.FullTextTEIExtractor])
+
+   def extract(self, data, dependency_results):
+      xml_root = dependency_results[interfaces.FullTextTEIExtractor].xml_result
+      body_node = xml_root.find('./text/body')
+
+      if body_node is None:
+         return RunnableError('Could not find body text in TEI xml file')
+
+      xml_string = ET.tostring(body_node).decode('utf-8')
+
+      plain_text = utils.xml_to_plain_text(xml_string)
+
+      plain_text = plain_text.encode('utf-8')
+      files = {'.txt': plain_text}
+
+      return ExtractorResult(xml_result=None, files=files)
+
 
 
 # Helper method, takes an affiliation node from Grobid TEI format and
