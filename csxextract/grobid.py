@@ -24,6 +24,13 @@ class GrobidHeaderTEIExtractor(interfaces.HeaderTEIExtractor):
       xml = _call_grobid_method(data, 'processHeaderDocument')
       return ExtractorResult(xml_result=xml)
 
+class GrobidCitationTEIExtractor(Extractor):
+   result_file_name = '.cite.tei'
+
+   def extract(self, data, dep_results):
+      xml = _call_grobid_method(data, 'processReferences')
+      return ExtractorResult(xml_result=xml)
+
 def _call_grobid_method(data, method):
       url = '{0}/{1}'.format(config.GROBID_HOST, method)
       files = {'input': data}
