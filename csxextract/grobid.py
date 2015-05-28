@@ -1,6 +1,7 @@
 from extraction.runnables import Extractor, RunnableError, ExtractorResult
 import csxextract.interfaces as interfaces
 import csxextract.config as config
+import csxextract.filters as filters
 import defusedxml.ElementTree as safeET
 import xml.etree.ElementTree as ET
 import xml.sax.saxutils as xmlutils
@@ -10,6 +11,7 @@ import re
 
 # Returns full TEI xml document of the PDF
 class GrobidTEIExtractor(interfaces.FullTextTEIExtractor):
+   dependencies = frozenset([filters.AcademicPaperFilter])
    result_file_name = '.tei'
 
    def extract(self, data, dep_results):
@@ -18,6 +20,7 @@ class GrobidTEIExtractor(interfaces.FullTextTEIExtractor):
 
 # Returns TEI xml document only of the PDF's header info
 class GrobidHeaderTEIExtractor(interfaces.HeaderTEIExtractor):
+   dependencies = frozenset([filters.AcademicPaperFilter])
    result_file_name = '.header.tei'
 
    def extract(self, data, dep_results):
@@ -25,6 +28,7 @@ class GrobidHeaderTEIExtractor(interfaces.HeaderTEIExtractor):
       return ExtractorResult(xml_result=xml)
 
 class GrobidCitationTEIExtractor(Extractor):
+   dependencies = frozenset([filters.AcademicPaperFilter])
    result_file_name = '.cite.tei'
 
    def extract(self, data, dep_results):

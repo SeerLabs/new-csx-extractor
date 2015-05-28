@@ -2,6 +2,7 @@ from extraction.runnables import Extractor, RunnableError, ExtractorResult
 import extraction.utils
 import config
 import interfaces
+import filters
 import utils
 import defusedxml.ElementTree as safeET
 import xml.etree.ElementTree as ET
@@ -13,7 +14,7 @@ import re
 # Takes a plain text version of a PDF and uses ParsCit to extract citations
 # Returns an xml document of citation info in CSX format
 class ParsCitCitationExtractor(interfaces.CSXCitationExtractor):
-   dependencies = frozenset([interfaces.PlainTextExtractor])
+   dependencies = frozenset([interfaces.PlainTextExtractor, filters.AcademicPaperFilter])
 
    result_file_name = '.cite'
 
