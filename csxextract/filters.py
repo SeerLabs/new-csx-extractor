@@ -8,6 +8,7 @@ import shutil
 class AcademicPaperFilter(Filter):
 
    dependencies = frozenset([interfaces.PlainTextExtractor])
+   result_file_name = '.academic_filter'
 
    def filter(self, data, dependency_results):
       # make a temporary directory for filter jar to read/write to

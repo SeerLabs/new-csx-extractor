@@ -13,6 +13,7 @@ import re
 
 # Returns a plain text version of a PDF file
 class PDFBoxPlainTextExtractor(interfaces.PlainTextExtractor):
+   result_file_name = '.text_extraction'
    def extract(self, data, dep_results):
       # Write the pdf data to a temporary location so PDFBox can process it
       file_path = utils.temp_file(data, suffix='.pdf')

@@ -27,12 +27,12 @@ class ParsCitCitationExtractor(interfaces.CSXCitationExtractor):
       try:
          status, stdout, stderr = extraction.utils.external_process(['perl', config.PARSCIT_PATH, text_file_path], timeout=20)
       except subprocess.TimeoutExpired as te:
-         raise RunnableError('PDFBox timed out while processing document')
+         raise RunnableError('ParsCit timed out while processing document')
       finally:
          os.remove(text_file_path)
 
       if status != 0:
-         raise RunnableError('ParsCit Failure')
+         raise RunnableError('ParsCit Failure. Possible error:\n' + stderr)
 
       # ParsCit will give us a string representing an xml doc
       # convert from string type  into an xml object
