@@ -18,6 +18,7 @@ def get_extraction_runner():
    runner.add_runnable(grobid.GrobidHeaderTEIExtractor)
    runner.add_runnable(extractors.TEItoHeaderExtractor)
    runner.add_runnable(extractors.ParsCitCitationExtractor)
+   runner.add_runnable(extractors.PDFFiguresExtractor)
    # OR
    # Option 2
    # But the plain text isn't that good this way

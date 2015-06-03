@@ -13,3 +13,6 @@ PARSCIT_PATH = os.path.expanduser('~/bin/pars_cit/bin/citeExtract.pl')
 FILTER_JAR_PATH = os.path.expanduser('~/bin/classifier/classifier.jar')
 FILTER_ACL_PATH = os.path.expanduser('~/bin/classifier/acl')
 FILTER_TRAIN_DATA_PATH = os.path.expanduser('~/bin/classifier/train_str_f43_paper.arff')
+
+# Path to PDFFigures binary
+PDFFIGURES_PATH = os.path.expanduser('~/bin/pdffigures')

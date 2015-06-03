@@ -9,7 +9,9 @@ import xml.etree.ElementTree as ET
 import subprocess32 as subprocess
 import requests
 import os
+import glob
 import re
+import tempfile
 
 # Takes a plain text version of a PDF and uses ParsCit to extract citations
 # Returns an xml document of citation info in CSX format
@@ -18,7 +20,7 @@ class ParsCitCitationExtractor(interfaces.CSXCitationExtractor):
 
    result_file_name = '.cite'
 
-   def extract(Self, data, dependency_results):
+   def extract(self, data, dependency_results):
       # Get the plain text file of the PDF and write it to a temporary location
       pdf_text = dependency_results[interfaces.PlainTextExtractor].files['.txt']
       text_file_path = extraction.utils.temp_file(pdf_text)
@@ -39,6 +41,44 @@ class ParsCitCitationExtractor(interfaces.CSXCitationExtractor):
       xml = safeET.fromstring(stdout)
 
       return ExtractorResult(xml_result=xml)
+
+class PDFFiguresExtractor(Extractor):
+   dependencies = frozenset([filters.AcademicPaperFilter])
+   result_file_name = '.figures'
+
+   def extract(self, data, dependency_results):
+      results_dir = tempfile.mkdtemp() + '/'
+      temp_pdf_file = extraction.utils.temp_file(data)
+
+      try:
+         command_args = [config.PDFFIGURES_PATH, '-o', results_dir, '-j', results_dir, temp_pdf_file]
+         status, stdout, stderr = extraction.utils.external_process(command_args, timeout=20)
+      except subprocess.TimeoutExpired:
+         shutil.rmtree(results_dir)
+         raise RunnableError('PDFFigures timed out while processing document')
+      finally:
+         os.remove(temp_pdf_file)
+
+      if status != 0:
+         raise RunnableError('PDFFigures Failure. Possible error:\n' + stderr)
+
+      # Handle png results
+      files = {}
+      for path in glob.glob(results_dir + '*.png'):
+         # basename looks something like this: -Figure-X.png
+         # remove the hyphen and replace with a '.', because framework will add filename prefix later
+         filename = '.' + os.path.basename(path)[1:]
+         files[filename] = open(path, 'rb').read()
+
+      # Handle json results
+      for path in glob.glob(results_dir + '*.json'):
+         filename = '.' + os.path.basename(path)[1:]
+         files[filename] = open(path, 'r').read()
+
+      return ExtractorResult(xml_result=None, files=files)
+
+
+
       
 
 # Takes a TEI xml file of a document (at least containing header info)
