@@ -40,13 +40,18 @@ $ cp crf_test ../../.libs/lt-crf_test
 
 Finally, the step marked as "optional" in the install instructions might actually be necessary when installing ParsCit.
 
-[1]: https://github.com/SeerLabs/extractor-framework
-[2]: https://pypi.python.org/pypi/defusedxml
-[3]: http://docs.python-requests.org/en/latest/
-[4]: https://github.com/kermitt2/grobid
-[5]: https://github.com/kermitt2/grobid/wiki/Grobid-service-quick-start
-[6]: http://pdfbox.apache.org/
-[7]: https://github.com/knmnyn/ParsCit
-[8]: https://github.com/knmnyn/ParsCit/blob/master/INSTALL
-[9]: http://wing.comp.nus.edu.sg/parsCit/#t
+#### pdffigures ####
+[pdffigures][10] is used to extract figures and tables from PDF files along with related figure and table metadata. It should be [installed as directed][11] by the pdffigures Github page. The path to the pdffigures binary can be configured in `csxextract/config.py`
+
+[1]:  https://github.com/SeerLabs/extractor-framework
+[2]:  https://pypi.python.org/pypi/defusedxml
+[3]:  http://docs.python-requests.org/en/latest/
+[4]:  https://github.com/kermitt2/grobid
+[5]:  https://github.com/kermitt2/grobid/wiki/Grobid-service-quick-start
+[6]:  http://pdfbox.apache.org/
+[7]:  https://github.com/knmnyn/ParsCit
+[8]:  https://github.com/knmnyn/ParsCit/blob/master/INSTALL
+[9]:  http://wing.comp.nus.edu.sg/parsCit/#t
+[10]: http://pdffigures.allenai.org/ 
+[11]: https://github.com/allenai/pdffigures#usage
 
