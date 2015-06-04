@@ -2,9 +2,11 @@ from extraction.core import ExtractionRunner
 from extraction.runnables import Extractor, RunnableError, Filter, ExtractorResult
 import os
 import sys
-import csxextract.grobid as grobid
-import csxextract.pdfbox as pdfbox
-import csxextract.extractors as extractors
+import csxextract.extractors.grobid as grobid
+import csxextract.extractors.pdfbox as pdfbox
+import csxextract.extractors.tei as tei
+import csxextract.extractors.parscit as parscit
+import csxextract.extractors.figures as figures
 import csxextract.filters as filters
 
 def get_extraction_runner():
@@ -12,19 +14,12 @@ def get_extraction_runner():
    runner = ExtractionRunner()
    runner.enable_logging('~/logs/results', '~/logs/runnables')
 
-   # Option 1
    runner.add_runnable(pdfbox.PDFBoxPlainTextExtractor)
    runner.add_runnable(filters.AcademicPaperFilter)
    runner.add_runnable(grobid.GrobidHeaderTEIExtractor)
-   runner.add_runnable(extractors.TEItoHeaderExtractor)
-   runner.add_runnable(extractors.ParsCitCitationExtractor)
-   runner.add_runnable(extractors.PDFFiguresExtractor)
-   # OR
-   # Option 2
-   # But the plain text isn't that good this way
-   # runner.add_runnable(extractors.TEItoPlainTextExtractor)
-
-   # runner.add_runnable(filters.AcademicPaperFilter)
+   runner.add_runnable(tei.TEItoHeaderExtractor)
+   runner.add_runnable(parscit.ParsCitCitationExtractor)
+   runner.add_runnable(figures.PDFFiguresExtractor)
 
    return runner
 

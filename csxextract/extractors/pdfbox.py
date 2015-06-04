@@ -1,7 +1,7 @@
 from extraction.runnables import Extractor, RunnableError, ExtractorResult
 import csxextract.interfaces as interfaces
 import csxextract.config as config
-import extraction.utils as utils
+import extraction.utils
 import subprocess32 as subprocess
 import defusedxml.ElementTree as safeET
 import xml.etree.ElementTree as ET
@@ -16,12 +16,12 @@ class PDFBoxPlainTextExtractor(interfaces.PlainTextExtractor):
    result_file_name = '.text_extraction'
    def extract(self, data, dep_results):
       # Write the pdf data to a temporary location so PDFBox can process it
-      file_path = utils.temp_file(data, suffix='.pdf')
+      file_path = extraction.utils.temp_file(data, suffix='.pdf')
       
       try:
-         status, stdout, stderr = utils.external_process(['java', '-jar', config.PDF_BOX_JAR, 'ExtractText', '-console', '-encoding', 'UTF-8', file_path],
-               timeout=30)
-      except subprocess.TimeoutExpired as te:
+         command_args = ['java', '-jar', config.PDF_BOX_JAR, 'ExtractText', '-console', '-encoding', 'UTF-8', file_path]
+         status, stdout, stderr = extraction.utils.external_process(command_args, timeout=30)
+      except subprocess.TimeoutExpired:
          raise RunnableError('PDFBox timed out while processing document')
       finally:
          os.remove(file_path)
