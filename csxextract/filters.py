@@ -1,7 +1,8 @@
 from extraction.runnables import Filter, RunnableError
 import csxextract.config as config
 import extraction.utils
-import interfaces
+import csxextract.interfaces as interfaces
+import subprocess32 as subprocess
 import tempfile
 import shutil
 
