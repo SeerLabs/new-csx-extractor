@@ -43,6 +43,11 @@ Finally, the step marked as "optional" in the install instructions might actuall
 #### pdffigures ####
 [pdffigures][10] is used to extract figures and tables from PDF files along with related figure and table metadata. It should be [installed as directed][11] by the pdffigures Github page. The path to the pdffigures binary can be configured in `csxextract/config.py`
 
+#### Algorithm Extractor ####
+A Java jar is used to extract algorithms from PDFs. The required files can be found at `resources/algextract/`. Store the `algo_extractor.jar` file and the `perl/` directory on your system where you wish. Then, in `csxextract/config.py`, set the `ALGORITHM_JAR_PATH` variable to the location of the `algo_extractor.jar` and the `ALGORITHMS_PERL_PATH` variable to the location of the `perl/` directory.
+
+Finally, make sure you have the [`Lingua::Stem`][12] Perl module installed. This can be installed with cpan.
+
 [1]:  https://github.com/SeerLabs/extractor-framework
 [2]:  https://pypi.python.org/pypi/defusedxml
 [3]:  http://docs.python-requests.org/en/latest/
@@ -54,4 +59,5 @@ Finally, the step marked as "optional" in the install instructions might actuall
 [9]:  http://wing.comp.nus.edu.sg/parsCit/#t
 [10]: http://pdffigures.allenai.org/ 
 [11]: https://github.com/allenai/pdffigures#usage
+[12]: http://search.cpan.org/~snowhare/Lingua-Stem/lib/Lingua/Stem.pod
 
