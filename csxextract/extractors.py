@@ -9,6 +9,7 @@ import xml.etree.ElementTree as ET
 import subprocess32 as subprocess
 import requests
 import os
+import shutil
 import glob
 import re
 import tempfile
@@ -68,12 +69,16 @@ class PDFFiguresExtractor(Extractor):
          # basename looks something like this: -Figure-X.png
          # remove the hyphen and replace with a '.', because framework will add filename prefix later
          filename = '.' + os.path.basename(path)[1:]
-         files[filename] = open(path, 'rb').read()
+         with open(path, 'rb') as f:
+            files[filename] = f.read()
 
       # Handle json results
       for path in glob.glob(results_dir + '*.json'):
          filename = '.' + os.path.basename(path)[1:]
-         files[filename] = open(path, 'r').read()
+         with open(path, 'r') as f:
+            files[filename] = f.read()
+
+      shutil.rmtree(results_dir)
 
       return ExtractorResult(xml_result=None, files=files)
 
