@@ -7,6 +7,7 @@ import csxextract.extractors.pdfbox as pdfbox
 import csxextract.extractors.tei as tei
 import csxextract.extractors.parscit as parscit
 import csxextract.extractors.figures as figures
+import csxextract.extractors.algorithms as algorithms
 import csxextract.filters as filters
 
 def get_extraction_runner():
@@ -20,6 +21,7 @@ def get_extraction_runner():
    runner.add_runnable(tei.TEItoHeaderExtractor)
    runner.add_runnable(parscit.ParsCitCitationExtractor)
    runner.add_runnable(figures.PDFFiguresExtractor)
+   runner.add_runnable(algorithms.AlgorithmsExtractor)
 
    return runner
 

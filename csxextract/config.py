@@ -16,3 +16,7 @@ FILTER_TRAIN_DATA_PATH = os.path.expanduser('~/bin/classifier/train_str_f43_pape
 
 # Path to PDFFigures binary
 PDFFIGURES_PATH = os.path.expanduser('~/bin/pdffigures')
+
+# Path to Algorithms extractor JAR
+ALGORITHMS_JAR_PATH = os.path.expanduser('~/bin/algextract/bin/algo_extractor.jar')
+ALGORITHMS_PERL_PATH = os.path.expanduser('~/bin/algextract/bin/perl')
