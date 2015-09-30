@@ -21,7 +21,7 @@ as the pdf file.
 [PDFBox][6] is used to get a plain text representation of the PDF files. The PDFBox jar needs to be on the machine somewhere. The default expected location is `~/bin` but this can be configured in `csxextract/config.py`.
 
 #### PDF Classifier Jar ####
-The PDF Classifier .jar file is used to classify PDFs as acadmic or not. It should be on the local machine somewhere, as well as its associated acl file and training data file. The paths to these three files can be configured in `csxextract/config.py`. These files an be found in `resources/classifier`.
+The PDF Classifier .jar file is used to classify PDFs as academic or not. It should be on the local machine somewhere, as well as its associated acl file and training data file. The paths to these three files can be configured in `csxextract/config.py`. These files an be found in `resources/classifier`.
 
 #### ParsCit ####
 [ParsCit][7] is used to extract citation information from the PDF files. The path to it's `citeExtract.pl` script should be configured in `csxextract/config.py`. The default expected location is `~/bin/pars_cit/bin/citeExtract.pl`.
