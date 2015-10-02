@@ -106,7 +106,7 @@ if __name__ == '__main__':
         files = []
         prefixes = []
         for doc in ids:
-            outputPaths.append(baseResultsPath + dateFolder + utils.id_to_path(doc))
+            outputPaths.append(baseResultsPath + dateFolder + utils.id_to_file_name(doc) + '/')
             prefixes.append(utils.id_to_file_name(doc))
         for path in documentPaths:
             files.append(baseDocumentPath + path)

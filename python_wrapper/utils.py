@@ -2,26 +2,28 @@ import os
 
 #file_name_to_id(fileName)
 #
-#Purpose: converts a xxx.xxx.xxx.pdf to xxxxxxxxx
+#Purpose: converts a xxx.xxx.xxx.pdf to int
 #Parameters: fileName - string in xxx.xxx.xxx.pdf format
 def file_name_to_id(fileName):
-    id = fileName.replace('.', '')[:-3]
-    return id
+    ID = fileName.replace('.', '')[:-3]
+    return int(ID)
 
 #id_to_file_name(id)
 #
-#Purpose: converts xxxxxxxxx to xxx.xxx.xxx
-#Parameters: id - id string of file
-def id_to_file_name(id):
-    fileName = id[:3] + '.' + id[3:6] + '.' + id[6:]
+#Purpose: converts int id to xxx.xxx.xxx
+#Parameters: ID - id string of file
+def id_to_file_name(ID):
+    idString = str(ID).zfill(9)
+    fileName = idString[:3] + '.' + idString[3:6] + '.' + idString[6:]
     return fileName
 
 #id_to_path(id)
 #
-#Purpose: converts xxxxxxxxx to xxx/xxx/xxx/
-#Parameters: id - id string of document
-def id_to_path(id):
-    path = id[:3] + '/' + id[3:6] + '/' + id[6:] + '/'
+#Purpose: converts int id to xxx/xxx/xxx/
+#Parameters: ID - id string of document
+def id_to_path(ID):
+    idString = str(ID).zfill(9)
+    path = idString[:3] + '/' + idString[3:6] + '/' + idString[6:] + '/'
 
 #expand_path(path)
 #

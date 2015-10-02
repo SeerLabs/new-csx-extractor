@@ -3,6 +3,7 @@ import urllib2 as url
 import ConfigParser
 import mysql.connector
 from mysql.connector import errorcode
+import utils
 
 class Wrapper:
 
@@ -50,7 +51,7 @@ class MySQLWrapper(Wrapper):
         self.batchSize = config['batchSize']
         self.startID = config['startID']
         self.states = states
-        self.batch = None #stores a list of document ids
+        self.batch = None   #stores a list of document ids
 
     #get_connection(host, dbName, user, pass)
     #
@@ -95,6 +96,23 @@ class MySQLWrapper(Wrapper):
 
         self.batch = ids
         cursor.close()
+
+    #get_document_ids()
+    #
+    #Purpose: parses the ids of all documents in a batch
+    #Returns: list of string ids
+    def get_document_ids(self):
+        return batch
+
+    #get_document_paths(docs)
+    #
+    #Purpose: parses the paths of all documents in a batch
+    #Returns: list of document paths as strings
+    def get_document_paths(self):
+        paths = []
+        for ID in self.batch:
+            paths.append(utils.id_to_path(ID) + util.id_to_file_name(ID) + '.pdf')
+        return paths
 
     #update_state(ids, state)
     #
