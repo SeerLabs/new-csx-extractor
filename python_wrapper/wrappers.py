@@ -135,7 +135,7 @@ class MySQLWrapper(Wrapper):
         cursor.close()
 
 class HTTPWrapper(Wrapper):
-    'Wrapper using the HTTP API'
+    'Wrapper using the RESTful API'
 
     #Constructor
     #
