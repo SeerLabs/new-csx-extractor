@@ -18,13 +18,13 @@ import csxextract.filters as filters
 #
 #Purpose: reads the results of a batch process from the results file
 #Parameters: resultsFilePath - path to results file
-#               logFilePath - path to log file that will copy the log from the extraction
+#               logDirPath - path to the directory that will copy the log from the extraction
 #Returns: dictionary with id: result as key: value pairs
-def read_results(resultsFilePath, logFilePath):
+def read_results(resultsFilePath, logDirPath):
     resultDict = {}
     resultsFilePath = utils.expand_path(resultsFilePath)
     resultsFile = open(resultsFilePath, 'r')
-    log = open(logFilePath, 'rw')
+    log = open(logDirPath + resultsFilePath[resultsFilePath.rfind('/'):], 'w')
     for line in resultsFile:
         log.write(line)
         finIndex = line.find('finished')
@@ -88,7 +88,7 @@ if __name__ == '__main__':
     elif wrapperConfig == 2:
         wrapper = wrappers.MySQLWrapper(connectionProps, states)
     elif wrapperConfig == 0:
-        wrapper = 
+        wrapper = wrappers.FileSystemWrapper(baseDocumentPath, int(connectionProps['batchSize']))
 
     #initialize other variables
     date = datetime.now().date
