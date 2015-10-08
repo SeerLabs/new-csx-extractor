@@ -18,12 +18,15 @@ import csxextract.filters as filters
 #
 #Purpose: reads the results of a batch process from the results file
 #Parameters: resultsFilePath - path to results file
+#               logFilePath - path to log file that will copy the log from the extraction
 #Returns: dictionary with id: result as key: value pairs
-def read_results(resultsFilePath):
+def read_results(resultsFilePath, logFilePath):
     resultDict = {}
     resultsFilePath = utils.expand_path(resultsFilePath)
     resultsFile = open(resultsFilePath, 'r')
+    log = open(logFilePath, 'rw')
     for line in resultsFile:
+        log.write(line)
         finIndex = line.find('finished')
         if finIndex >= 0:
             fileName = line[finIndex-16:finIndex-1]
@@ -33,17 +36,20 @@ def read_results(resultsFilePath):
             if (resultString == 'SUCCESS'):
                 result = True
             resultDict[fileID] = result
+    log.close()
+    resultsFile.close()
     return resultDict
 
 #on_batch_finished(resultsFileDirectory, wrapper)
 #
 #Purpose: reads the results from the finished batch and updates the database as needed
 #Parameters: resultsFileDirectory - path to directory that contains results file,
+#               logFilePath - path to log file that will copy the log from the extraction
 #               wrapper - the active wrapper to use for communication with database,
 #               states - dict mapping states to values
-def on_batch_finished(resultsFileDirectory, wrapper, states):
+def on_batch_finished(resultsFileDirectory, logFilePath, wrapper, states):
     resultsFilePath = glob(resultsFileDirectory + "results*")[0]
-    results = read_results(resultsFilePath)
+    results = read_results(resultsFilePath, logfilePath)
     successes = []
     failures = []
     for key, value in results.iteritems():
@@ -75,6 +81,7 @@ if __name__ == '__main__':
     baseDocumentPath = config.get('ExtractionConfigurations', 'baseDocumentPath')
     baseResultsPath = config.get('ExtractionConfigurations', 'baseResultsPath')
     baseLogPath = config.get('ExtractionConfigurations', 'baseLogPath')
+    logFilePath = config.get('ExtractionConfigurations', 'logFilePath')
     wrapperConfig = config.getint('WrapperSettings', 'wrapper')
     if wrapperConfig == 1:
         wrapper = wrappers.HTTPWrapper(config)
@@ -113,7 +120,7 @@ if __name__ == '__main__':
 
         wrapper.update_state(ids, states['EXTRACTING'])
         runner.run_from_file_batch(files, outputPaths, num_processes=numProcesses, file_prefixes=prefixes)
-        on_batch_finished(logPath, wrapper, states)
+        on_batch_finished(logPath, logFilePath, wrapper, states)
 
         numDocs += int(connectionProps['batchSize'])
         if numDocs >= maxDocs:
