@@ -84,9 +84,11 @@ if __name__ == '__main__':
     logFilePath = config.get('ExtractionConfigurations', 'logFilePath')
     wrapperConfig = config.getint('WrapperSettings', 'wrapper')
     if wrapperConfig == 1:
-        wrapper = wrappers.HTTPWrapper(config)
-    #elif wrapperConfig == 2:
-        #initialize as SQLWrapper
+        wrapper = wrappers.HTTPWrapper(connectionProps)
+    elif wrapperConfig == 2:
+        wrapper = wrappers.MySQLWrapper(connectionProps, states)
+    elif wrapperConfig == 0:
+        wrapper = 
 
     #initialize other variables
     date = datetime.now().date

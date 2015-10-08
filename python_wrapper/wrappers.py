@@ -4,6 +4,7 @@ import ConfigParser
 import mysql.connector
 from mysql.connector import errorcode
 import utils
+import os
 
 class Wrapper:
 
@@ -39,6 +40,62 @@ class Wrapper:
     def on_stop(self):
         raise NotImplementedError('Extend me!')
 
+class FileSystemWrapper(Wrapper):
+    'Wrapper using file system and does not communicate with database'
+
+    #Constructor
+    #
+    #Parameters: rootPath - path to directory that should be proccessed
+    #               batchSize - number of documents to process at a time
+    def __init__(self, rootPath, batchSize):
+        self.batchSize = batchSize
+        self.allDocs = []   #stores a list of paths to the documents to process
+        self.rootPath = rootPath
+        for path, subdirs, files in os.walk(rootPath):
+            for name in files:
+                allDocs.append(os.path.join(path, name))
+        self.batch = [] #stores a list of paths to the documents to process
+
+    #get_document_batch()
+    #Purpose: retrieves batch of documents to process from server
+    def get_document_batch(self):
+        for i in range(0, self.batchSize):
+            if len(allDocs) > 0:
+                batch.append(allDocs.pop())
+
+    #get_document_ids()
+    #
+    #Purpose: parses the ids of all documents in a batch
+    #Returns: list of string ids
+    def get_document_ids(self):
+        ids = []
+        for docPath in self.batch:
+            ids.append(docPath[docPath.rfind('/') + 1 : docPath.rfind('.pdf')])
+        return ids
+
+    #get_document_paths()
+    #
+    #Purpose: parses the paths of all documents in a batch
+    #Returns: list of document paths as strings
+    def get_document_paths(self):
+        paths = []
+        for docPath in self.batch:
+            paths.append(docPath.replace(self.rootPath, ''))
+        return paths
+
+    #update_state(ids, state)
+    #
+    #Purpose: updates the extraction state of the given documents in the database
+    #Parameters: ids - list of documents ids, state - the int state to assignt to each document
+    def update_state(self, ids, state):
+        return
+
+    #on_stop()
+    #
+    #Purpose: performs any necessary closing statements to free up connections and such
+    def on_stop(self):
+        return
+
 class MySQLWrapper(Wrapper):
     'Wrapper using mySQL API'
 
@@ -48,7 +105,7 @@ class MySQLWrapper(Wrapper):
     #               states - dict that holds map of state values
     def __init__(self, config, states):
         self.connection = get_connection(config['host'], config['database'], config['username'], config['password'])
-        self.batchSize = config['batchSize']
+        self.batchSize = int(config['batchSize'])
         self.startID = config['startID']
         self.states = states
         self.batch = None   #stores a list of document ids
@@ -143,7 +200,7 @@ class HTTPWrapper(Wrapper):
     def __init__(self, config):
         self.host = config['host']
         self.key = config['key']
-        self.batchSize = config['batchSize']
+        self.batchSize = int(config['batchSize'])
         self.batch = None #stores a DOM with ids and paths
 
     #get_document_batch()
