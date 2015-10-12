@@ -140,6 +140,7 @@ if __name__ == '__main__':
 
         config.read('properties.config')
         stopProcessing = config.getboolean('ExtractionConfigurations', 'stopProcessing')
+        print str(stopProcessing)
     wrapper.on_stop()
 
 
