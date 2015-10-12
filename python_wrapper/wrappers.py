@@ -207,7 +207,7 @@ class HTTPWrapper(Wrapper):
     #
     #Purpose: retrieves batch of documents to process from server
     def get_document_batch(self):
-        request = 'http://' + self.host + '/api/getdocs.xml?key=' + self.key + '&n=' + self.batchSize
+        request = 'http://' + self.host + '/api/getdocs.xml?key=' + self.key + '&n=' + str(self.batchSize)
         responseString = url.urlopen(request).read()
         response = parseString(responseString)
         docs = response.getElementsByTagName('doc')
