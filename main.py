@@ -93,7 +93,7 @@ if __name__ == '__main__':
         wrapper = wrappers.FileSystemWrapper(baseDocumentPath, int(connectionProps['batchsize']))
 
     #initialize other variables
-    date = datetime.now().date
+    date = str(datetime.now().date())
     dateBatchNum = 0
     dateFolder = str(date).replace('-', '') + str(dateBatchNum).zfill(2) + '/'
     numDocs = len(glob(baseResultsPath + dateFolder + '*'))

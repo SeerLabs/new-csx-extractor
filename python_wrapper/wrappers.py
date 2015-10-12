@@ -60,6 +60,7 @@ class FileSystemWrapper(Wrapper):
     #get_document_batch()
     #Purpose: retrieves batch of documents to process from server
     def get_document_batch(self):
+        self.batch = []
         for i in range(0, self.batchSize):
             if len(self.allDocs) > 0:
                 self.batch.append(self.allDocs.pop())
