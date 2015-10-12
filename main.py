@@ -49,7 +49,7 @@ def read_results(resultsFilePath, logDirPath):
 #               states - dict mapping states to values
 def on_batch_finished(resultsFileDirectory, logFilePath, wrapper, states):
     print resultsFileDirectory
-    resultsFilePath = glob(resultsFileDirectory + "/*")[0]
+    resultsFilePath = glob(resultsFileDirectory + "*")[0]
     results = read_results(resultsFilePath, logfilePath)
     successes = []
     failures = []
