@@ -30,6 +30,7 @@ def read_results(resultsFilePath, logDirPath):
         finIndex = line.find('finished')
         if finIndex >= 0:
             fileName = line[finIndex-16:finIndex-1]
+            print fileName
             fileID = utils.file_name_to_id(fileName)
             resultString = line[line.find('[')+1:line.find(']')]
             result = False
