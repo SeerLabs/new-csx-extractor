@@ -73,7 +73,7 @@ def get_extraction_runner():
 if __name__ == '__main__':
     #initialize configurations
     config = ConfigParser.ConfigParser()
-    config.read('properties.config')
+    config.read('python_wrapper/properties.config')
     connectionProps = dict(config.items('ConnectionProperties'))
     states = dict(config.items('States'))
     numProcesses = config.getint('ExtractionConfigurations', 'numProcesses')
