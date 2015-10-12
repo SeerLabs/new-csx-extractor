@@ -49,7 +49,7 @@ def read_results(resultsFilePath, logDirPath):
 #               states - dict mapping states to values
 def on_batch_finished(resultsFileDirectory, logFilePath, wrapper, states):
     print resultsFileDirectory
-    resultsFilePath = glob(resultsFileDirectory + "results*")[0]
+    resultsFilePath = glob(resultsFileDirectory + "/*")[0]
     results = read_results(resultsFilePath, logfilePath)
     successes = []
     failures = []
@@ -109,7 +109,7 @@ if __name__ == '__main__':
     stopProcessing = config.getboolean('ExtractionConfigurations', 'stopProcessing')
     while not stopProcessing:
         logPath = baseLogPath + dateFolder + 'batch' + str(batchNum) + '/'
-        runner.enable_logging(logPath[:-1], baseLogPath + 'runnables')
+        runner.enable_logging(logPath, baseLogPath + 'runnables')
         wrapper.get_document_batch()
         documentPaths = wrapper.get_document_paths()
         ids = wrapper.get_document_ids()
