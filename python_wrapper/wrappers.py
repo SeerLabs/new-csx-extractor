@@ -53,14 +53,14 @@ class FileSystemWrapper(Wrapper):
         self.rootPath = rootPath
         for path, subdirs, files in os.walk(rootPath):
             for name in files:
-                allDocs.append(os.path.join(path, name))
+                self.allDocs.append(os.path.join(path, name))
         self.batch = [] #stores a list of paths to the documents to process
 
     #get_document_batch()
     #Purpose: retrieves batch of documents to process from server
     def get_document_batch(self):
         for i in range(0, self.batchSize):
-            if len(allDocs) > 0:
+            if len(self.allDocs) > 0:
                 batch.append(allDocs.pop())
 
     #get_document_ids()
@@ -113,7 +113,7 @@ def get_connection(hostName, dbName, username, password):
             print("Database does not exist")
         else:
             print(err)
-    return null
+    return none
 
 class MySQLWrapper(Wrapper):
     'Wrapper using mySQL API'
