@@ -2,10 +2,10 @@ import os
 
 #file_name_to_id(fileName)
 #
-#Purpose: converts a xxx.xxx.xxx.pdf to int
+#Purpose: converts a xxx.xxx.xxx to int
 #Parameters: fileName - string in xxx.xxx.xxx.pdf format
 def file_name_to_id(fileName):
-    ID = fileName.replace('.', '')[:-3]
+    ID = fileName.replace('.', '')
     print ID
     return int(ID)
 

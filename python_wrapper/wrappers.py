@@ -71,7 +71,7 @@ class FileSystemWrapper(Wrapper):
         ids = []
         for docPath in self.batch:
             print docPath[docPath.rfind('/') + 1 : docPath.rfind('.pdf')]
-            ids.append(utils.file_name_to_id(docPath[docPath.rfind('/') + 1 : docPath.rfind('.pdf')]))
+            ids.append(utils.file_name_to_id(docPath[docPath.rfind('/') + 1 : docPath.rfind('.pdf') + 4]))
         return ids
 
     #get_document_paths()
