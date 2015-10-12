@@ -81,7 +81,7 @@ if __name__ == '__main__':
     baseDocumentPath = config.get('ExtractionConfigurations', 'baseDocumentPath')
     baseResultsPath = config.get('ExtractionConfigurations', 'baseResultsPath')
     baseLogPath = config.get('ExtractionConfigurations', 'baseLogPath')
-    logFilePath = config.get('ExtractionConfigurations', 'logFilePath')
+    logFilePath = config.get('ExtractionConfigurations', 'logDirPath')
     wrapperConfig = config.getint('WrapperSettings', 'wrapper')
     if wrapperConfig == 1:
         wrapper = wrappers.HTTPWrapper(connectionProps)
