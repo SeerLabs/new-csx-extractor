@@ -50,7 +50,7 @@ def read_results(resultsFilePath, logDirPath):
 def on_batch_finished(resultsFileDirectory, logFilePath, wrapper, states):
     print resultsFileDirectory
     resultsFilePath = glob(resultsFileDirectory + ".*")[0]
-    results = read_results(resultsFilePath, logfilePath)
+    results = read_results(resultsFilePath, logFilePath)
     successes = []
     failures = []
     for key, value in results.iteritems():
