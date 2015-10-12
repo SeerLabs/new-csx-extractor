@@ -98,18 +98,7 @@ class FileSystemWrapper(Wrapper):
 
 class MySQLWrapper(Wrapper):
     'Wrapper using mySQL API'
-
-    #Constructor
-    #
-    #Parameters: config - dict that holds configurations for a database connection,
-    #               states - dict that holds map of state values
-    def __init__(self, config, states):
-        self.connection = get_connection(config['host'], config['database'], config['username'], config['password'])
-        self.batchSize = int(config['batchsize'])
-        self.startID = config['startid']
-        self.states = states
-        self.batch = None   #stores a list of document ids
-
+    
     #get_connection(host, dbName, user, pass)
     #
     #Purpose: gets a connection to the database that stores metadata
@@ -128,6 +117,17 @@ class MySQLWrapper(Wrapper):
             else:
                 print(err)
         return null
+
+    #Constructor
+    #
+    #Parameters: config - dict that holds configurations for a database connection,
+    #               states - dict that holds map of state values
+    def __init__(self, config, states):
+        self.connection = get_connection(config['host'], config['database'], config['username'], config['password'])
+        self.batchSize = int(config['batchsize'])
+        self.startID = config['startid']
+        self.states = states
+        self.batch = None   #stores a list of document ids
 
     #on_stop()
     #
