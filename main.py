@@ -1,6 +1,6 @@
 import ConfigParser
-import wrappers
-import utils
+import python_wrapper.wrappers
+import python_wrapper.utils
 from glob import glob
 from datetime import datetime
 
