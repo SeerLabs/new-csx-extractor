@@ -138,6 +138,7 @@ if __name__ == '__main__':
         else:
             batchNum += 1
 
+        config = ConfigParser.ConfigParser()
         config.read('properties.config')
         stopProcessing = config.getboolean('ExtractionConfigurations', 'stopProcessing')
         print str(stopProcessing)
