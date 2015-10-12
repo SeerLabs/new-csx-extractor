@@ -149,7 +149,7 @@ class MySQLWrapper(Wrapper):
         for doc in cursor:
             ids.append(str(doc))
 
-        print ids
+        #print ids
 
         self.batch = ids
         cursor.close()
@@ -221,7 +221,6 @@ class HTTPWrapper(Wrapper):
         ids = []
         for element in self.batch:
             ids.append(element.getAttribute('id'))
-        print ids
         return ids
 
     #get_document_paths(docs)
@@ -246,7 +245,6 @@ class HTTPWrapper(Wrapper):
             idString = idString[:-1]
             request = 'http://' + self.host + '/api/setdocs.xml?key=' + self.key + '&ids=' + idString + '&state=' + str(state)
             response = url.urlopen(request).getcode()
-            print response
 
     #on_stop()
     #
