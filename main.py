@@ -104,7 +104,7 @@ if __name__ == '__main__':
     while numDocs >= maxDocs:
         dateBatchNum += 1
         dateFolder = str(date).replace('-', '') + str(dateBatchNum).zfill(2) + '/'
-        numDocs = len(glob(baseResultsPath + dateFolder, '*'))
+        numDocs = len(glob(baseResultsPath + dateFolder +'*'))
 
     #main loop
     stopProcessing = config.getboolean('ExtractionConfigurations', 'stopProcessing')
