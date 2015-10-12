@@ -105,8 +105,8 @@ class MySQLWrapper(Wrapper):
     #               states - dict that holds map of state values
     def __init__(self, config, states):
         self.connection = get_connection(config['host'], config['database'], config['username'], config['password'])
-        self.batchSize = int(config['batchSize'])
-        self.startID = config['startID']
+        self.batchSize = int(config['batchsize'])
+        self.startID = config['startid']
         self.states = states
         self.batch = None   #stores a list of document ids
 
@@ -200,7 +200,7 @@ class HTTPWrapper(Wrapper):
     def __init__(self, config):
         self.host = config['host']
         self.key = config['key']
-        self.batchSize = int(config['batchSize'])
+        self.batchSize = int(config['batchsize'])
         self.batch = None #stores a DOM with ids and paths
 
     #get_document_batch()

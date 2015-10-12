@@ -57,8 +57,8 @@ def on_batch_finished(resultsFileDirectory, logFilePath, wrapper, states):
             successes.append(key)
         else:
             failures.append(key)
-    wrapper.update_state(successes, states['PASS'])
-    wrapper.update_state(failures, states['FAIL'])
+    wrapper.update_state(successes, states['pass'])
+    wrapper.update_state(failures, states['fail'])
 
 #get_extraction_runner()
 #
@@ -88,7 +88,7 @@ if __name__ == '__main__':
     elif wrapperConfig == 2:
         wrapper = wrappers.MySQLWrapper(connectionProps, states)
     elif wrapperConfig == 0:
-        wrapper = wrappers.FileSystemWrapper(baseDocumentPath, int(connectionProps['batchSize']))
+        wrapper = wrappers.FileSystemWrapper(baseDocumentPath, int(connectionProps['batchsize']))
 
     #initialize other variables
     date = datetime.now().date
@@ -122,11 +122,11 @@ if __name__ == '__main__':
         for path in documentPaths:
             files.append(baseDocumentPath + path)
 
-        wrapper.update_state(ids, states['EXTRACTING'])
+        wrapper.update_state(ids, states['extracting'])
         runner.run_from_file_batch(files, outputPaths, num_processes=numProcesses, file_prefixes=prefixes)
         on_batch_finished(logPath, logFilePath, wrapper, states)
 
-        numDocs += int(connectionProps['batchSize'])
+        numDocs += int(connectionProps['batchsize'])
         if numDocs >= maxDocs:
             dateBatchNum += 1
             date = datetime.now().date
