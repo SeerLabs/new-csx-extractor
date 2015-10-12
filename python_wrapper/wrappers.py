@@ -96,27 +96,27 @@ class FileSystemWrapper(Wrapper):
     def on_stop(self):
         return
 
+#get_connection(host, dbName, user, pass)
+#
+#Purpose: gets a connection to the database that stores metadata
+#Parameters: hostName - hostname that database is on, dbName - name of database,
+#                       username, password
+#Returns: MySQLConnection object
+def get_connection(self, hostName, dbName, username, password):
+    try:
+        con = mysql.connector.connect(user=username, password=password, host=hostName, database=dbName)
+        return con
+    except mysql.connector.Error as err:
+        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
+            print("Something is wrong with your user name or password")
+        elif err.errno == errorcode.ER_BAD_DB_ERROR:
+            print("Database does not exist")
+        else:
+            print(err)
+    return null
+
 class MySQLWrapper(Wrapper):
     'Wrapper using mySQL API'
-    
-    #get_connection(host, dbName, user, pass)
-    #
-    #Purpose: gets a connection to the database that stores metadata
-    #Parameters: hostName - hostname that database is on, dbName - name of database,
-    #                       username, password
-    #Returns: MySQLConnection object
-    def get_connection(self, hostName, dbName, username, password):
-        try:
-            con = mysql.connector.connect(user=username, password=password, host=hostName, database=dbName)
-            return con
-        except mysql.connector.Error as err:
-            if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-                print("Something is wrong with your user name or password")
-            elif err.errno == errorcode.ER_BAD_DB_ERROR:
-                print("Database does not exist")
-            else:
-                print(err)
-        return null
 
     #Constructor
     #
