@@ -30,7 +30,6 @@ def read_results(resultsFilePath, logDirPath):
         finIndex = line.find('finished')
         if finIndex >= 0:
             fileName = line[finIndex-16:finIndex-1]
-            print fileName
             fileID = utils.file_name_to_id(fileName)
             resultString = line[line.find('[')+1:line.find(']')]
             result = False
@@ -141,7 +140,7 @@ if __name__ == '__main__':
         #config = ConfigParser.ConfigParser()
         config.read('python_wrapper/properties.config')
         stopProcessing = config.getboolean('ExtractionConfigurations', 'stopProcessing')
-        print str(stopProcessing)
+        print 'stopProcessing: ' + str(stopProcessing)
     wrapper.on_stop()
 
 
