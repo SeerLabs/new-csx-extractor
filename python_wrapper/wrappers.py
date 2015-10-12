@@ -102,7 +102,7 @@ class FileSystemWrapper(Wrapper):
 #Parameters: hostName - hostname that database is on, dbName - name of database,
 #                       username, password
 #Returns: MySQLConnection object
-def get_connection(self, hostName, dbName, username, password):
+def get_connection(hostName, dbName, username, password):
     try:
         con = mysql.connector.connect(user=username, password=password, host=hostName, database=dbName)
         return con
