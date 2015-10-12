@@ -24,7 +24,7 @@ def read_results(resultsFilePath, logDirPath):
     resultDict = {}
     resultsFilePath = utils.expand_path(resultsFilePath)
     resultsFile = open(resultsFilePath, 'r')
-    log = open(logDirPath + resultsFilePath[resultsFilePath.rfind('/'):], 'w')
+    log = open(logDirPath + resultsFilePath[resultsFilePath.rfind('/'):], 'wa')
     for line in resultsFile:
         log.write(line)
         finIndex = line.find('finished')
