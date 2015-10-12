@@ -61,7 +61,7 @@ class FileSystemWrapper(Wrapper):
     def get_document_batch(self):
         for i in range(0, self.batchSize):
             if len(self.allDocs) > 0:
-                self.batch.append(allDocs.pop())
+                self.batch.append(self.allDocs.pop())
 
     #get_document_ids()
     #
