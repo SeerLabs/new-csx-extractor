@@ -109,7 +109,7 @@ if __name__ == '__main__':
     while not stopProcessing:
         logPath = baseLogPath + dateFolder + 'batch' + str(batchNum) + '/'
         runner.enable_logging(logPath[:-1], baseLogPath + 'runnables')
-        wrapper.getDocumentBatch()
+        wrapper.get_document_batch()
         documentPaths = wrapper.get_document_paths()
         ids = wrapper.get_document_ids()
         print ids;
