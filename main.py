@@ -48,6 +48,7 @@ def read_results(resultsFilePath, logDirPath):
 #               wrapper - the active wrapper to use for communication with database,
 #               states - dict mapping states to values
 def on_batch_finished(resultsFileDirectory, logFilePath, wrapper, states):
+    print resultsFileDirectory
     resultsFilePath = glob(resultsFileDirectory + "results*")[0]
     results = read_results(resultsFilePath, logfilePath)
     successes = []
