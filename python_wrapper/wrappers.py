@@ -53,7 +53,8 @@ class FileSystemWrapper(Wrapper):
         self.rootPath = rootPath
         for path, subdirs, files in os.walk(rootPath):
             for name in files:
-                self.allDocs.append(os.path.join(path, name))
+                if name[-3:] == 'pdf':
+                    self.allDocs.append(os.path.join(path, name))
         self.batch = [] #stores a list of paths to the documents to process
 
     #get_document_batch()
