@@ -131,7 +131,7 @@ if __name__ == '__main__':
         numDocs += int(connectionProps['batchsize'])
         if numDocs >= maxDocs:
             dateBatchNum += 1
-            date = datetime.now().date
+            date = str(datetime.now().date())
             dateFolder = str(date).replace('-', '') + str(dateBatchNum).zfill(2) + '/'
             numDocs = 0
             batchNum = 0
