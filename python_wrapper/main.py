@@ -100,7 +100,7 @@ if __name__ == '__main__':
 
     #make sure there is space in dateFolder
     while numDocs >= maxDocs:
-        dateBatchNum++
+        dateBatchNum += 1
         dateFolder = str(date).replace('-', '') + str(dateBatchNum).zfill(2) + '/'
         numDocs = len(glob(baseResultsPath + dateFolder, '*'))
 
@@ -128,13 +128,13 @@ if __name__ == '__main__':
 
         numDocs += int(connectionProps['batchSize'])
         if numDocs >= maxDocs:
-            dateBatchNum++
+            dateBatchNum += 1
             date = datetime.now().date
             dateFolder = str(date).replace('-', '') + str(dateBatchNum).zfill(2) + '/'
             numDocs = 0
             batchNum = 0
         else:
-            batchNum++
+            batchNum += 1
 
         config.read('properties.config')
         stopProcessing = config.getboolean('ExtractionConfigurations', 'stopProcessing')
