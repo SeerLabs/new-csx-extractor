@@ -104,6 +104,7 @@ if __name__ == '__main__':
         dateFolder = str(date).replace('-', '') + str(dateBatchNum).zfill(2) + '/'
         numDocs = len(glob(baseResultsPath + dateFolder, '*'))
 
+    #main loop
     stopProcessing = config.getboolean('ExtractionConfigurations', 'stopProcessing')
     while not stopProcessing:
         logPath = baseLogPath + dateFolder + 'batch' + str(batchNum) + '/'
@@ -111,6 +112,7 @@ if __name__ == '__main__':
         wrapper.getDocumentBatch()
         documentPaths = wrapper.get_document_paths()
         ids = wrapper.get_document_ids()
+        print ids;
         outputPaths = []
         files = []
         prefixes = []
