@@ -113,12 +113,12 @@ class MySQLWrapper(Wrapper):
     #get_connection(host, dbName, user, pass)
     #
     #Purpose: gets a connection to the database that stores metadata
-    #Parameters: host - hostname that database is on, dbName - name of database,
+    #Parameters: hostName - hostname that database is on, dbName - name of database,
     #                       username, password
     #Returns: MySQLConnection object
-    def get_connection(self, host, dbName, username, password):
+    def get_connection(self, hostName, dbName, username, password):
         try:
-            con = mysql.connector.connect(user=username, pass=password, host=host, database=dbName)
+            con = mysql.connector.connect(user=username, password=password, host=hostName, database=dbName)
             return con
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
