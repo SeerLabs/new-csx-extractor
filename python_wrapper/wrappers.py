@@ -115,7 +115,7 @@ def get_connection(hostName, dbName, username, password):
             print("Database does not exist")
         else:
             print(err)
-    return none
+    return None
 
 class MySQLWrapper(Wrapper):
     'Wrapper using mySQL API'
