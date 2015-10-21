@@ -112,6 +112,7 @@ def get_connection(hostName, dbName, username, password):
     except mdb.Error, e:
         print "Error %d: %s" % (e.args[0],e.args[1])
         sys.exit(1)
+    print 'error'
     return None
 
 class MySQLWrapper(Wrapper):
