@@ -141,7 +141,7 @@ class MySQLWrapper(Wrapper):
     #Purpose: retrieves batch of documents to process from server
     def get_document_batch(self):
         cursor = self.connection.cursor()
-        query = 'SELECT id from main_crawl_document WHERE id> %d and state = %d ORDER BY id LIMIT %d;'
+        query = 'SELECT id from main_crawl_document WHERE id> %s and state = %s ORDER BY id LIMIT %s;'
 
         cursor.execute(query, (self.startID, self.states['crawled'], self.batchSize))
 
@@ -179,7 +179,7 @@ class MySQLWrapper(Wrapper):
     #Parameters: ids - list of document ids, state - the int state to assignt to each document
     def update_state(self, ids, state):
         cursor = self.connection.cursor()
-        statement = 'UPDATE main_crawl_document SET state = %s where id in %s;'
+        statement = 'UPDATE main_crawl_document SET state = %s where id in (%s);'
 
         idString = ''
 
@@ -187,10 +187,11 @@ class MySQLWrapper(Wrapper):
             if len(idString) != 0:
                 idString += ','
             idString += str(doc)
-        idString = '(' + idString + ')'
         print idString
+
+        statement.format(state, idString)
             
-        cursor.execute(statement, (state, idString))
+        cursor.execute(statement)
 
         self.connection.commit()
 
