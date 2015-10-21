@@ -106,7 +106,8 @@ class FileSystemWrapper(Wrapper):
 #Returns: MySQLConnection object
 def get_connection(hostName, dbName, username, password):
     try:
-        con = mdb.connect(user=username, passwd=password, host=hostName, db=dbName)
+        #con = mdb.connect(user=username, passwd=password, host=hostName, db=dbName)
+        con = mdb.connect(hostName, username, password, dbName)
         return con
     except mdb.Error, e:
         print "Error %d: %s" % (e.args[0],e.args[1])
