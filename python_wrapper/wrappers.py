@@ -189,7 +189,7 @@ class MySQLWrapper(Wrapper):
             idString += str(doc)
         print idString
 
-        statement.format(state, idString)
+        statement = statement.format(state, idString)
             
         cursor.execute(statement)
 
