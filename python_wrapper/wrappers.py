@@ -147,8 +147,9 @@ class MySQLWrapper(Wrapper):
 
         ids = []
         docs = cursor.fetchall()
-        for doc in cursor.fetchall():
-            ids.append(str(doc))
+        for doc in docs:
+            for idnum in doc:
+                ids.append(str(idnum))
 
         print ids
 
