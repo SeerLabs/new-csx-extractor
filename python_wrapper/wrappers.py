@@ -151,8 +151,6 @@ class MySQLWrapper(Wrapper):
             for idnum in doc:
                 ids.append(str(idnum))
 
-        print ids
-
         self.batch = ids
         cursor.close()
 
@@ -187,7 +185,6 @@ class MySQLWrapper(Wrapper):
             if len(idString) != 0:
                 idString += ','
             idString += str(doc)
-        print idString
 
         statement = statement.format(state, idString)
             
