@@ -1,10 +1,10 @@
 from xml.dom.minidom import parseString
 import urllib2 as url
 import ConfigParser
-import mysql.connector
-from mysql.connector import errorcode
+import MySQLdb as mdb
 import utils
 import os
+import sys
 
 class Wrapper:
 
@@ -106,15 +106,11 @@ class FileSystemWrapper(Wrapper):
 #Returns: MySQLConnection object
 def get_connection(hostName, dbName, username, password):
     try:
-        con = mysql.connector.connect(user=username, password=password, host=hostName, database=dbName)
+        con = mdb.connect(user=username, passwd=password, host=hostName, db=dbName)
         return con
-    except mysql.connector.Error as err:
-        if err.errno == errorcode.ER_ACCESS_DENIED_ERROR:
-            print("Something is wrong with your user name or password")
-        elif err.errno == errorcode.ER_BAD_DB_ERROR:
-            print("Database does not exist")
-        else:
-            print(err)
+    except mdb.Error, e:
+        print "Error %d: %s" % (e.args[0],e.args[1])
+        sys.exit(1)
     return None
 
 class MySQLWrapper(Wrapper):
@@ -148,10 +144,10 @@ class MySQLWrapper(Wrapper):
         cursor.execute(query, (self.startID, self.states['CRAWLED'], self.batchSize))
 
         ids = []
-        for doc in cursor:
+        for doc in cursor.fetchall():
             ids.append(str(doc))
 
-        #print ids
+        print ids
 
         self.batch = ids
         cursor.close()
@@ -191,7 +187,6 @@ class MySQLWrapper(Wrapper):
         cursor.execute(statement, (state, idString))
 
         connection.commit()
-        cursor.close()
 
 class HTTPWrapper(Wrapper):
     'Wrapper using the RESTful API'
