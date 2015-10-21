@@ -186,7 +186,7 @@ class MySQLWrapper(Wrapper):
         for doc in ids:
             if len(idString) != 0:
                 idString += ','
-            idString += doc
+            idString += str(doc)
 
         cursor.execute(statement, (state, idString))
 
@@ -240,8 +240,8 @@ class HTTPWrapper(Wrapper):
     #Parameters: ids - list of documents ids, state - the int state to assignt to each document
     def update_state(self, ids, state):
         idString = ''
-        for id in ids:
-            idString = idString + str(id) + ','
+        for doc in ids:
+            idString = idString + str(doc) + ','
         if len(idString) > 0:
             idString = idString[:-1]
             request = 'http://' + self.host + '/api/setdocs.xml?key=' + self.key + '&ids=' + idString + '&state=' + str(state)
