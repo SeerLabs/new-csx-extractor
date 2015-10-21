@@ -141,7 +141,7 @@ class MySQLWrapper(Wrapper):
     #Purpose: retrieves batch of documents to process from server
     def get_document_batch(self):
         cursor = self.connection.cursor()
-        query = 'SELECT id from main_crawl_document WHERE id> %s and state = %s ORDER BY id LIMIT %s;'
+        query = 'SELECT id from main_crawl_document WHERE id> %d and state = %d ORDER BY id LIMIT %d;'
 
         cursor.execute(query, (self.startID, self.states['crawled'], self.batchSize))
 
