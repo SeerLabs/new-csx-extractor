@@ -159,7 +159,7 @@ class MySQLWrapper(Wrapper):
     #Purpose: parses the ids of all documents in a batch
     #Returns: list of string ids
     def get_document_ids(self):
-        return batch
+        return self.batch
 
     #get_document_paths(docs)
     #
