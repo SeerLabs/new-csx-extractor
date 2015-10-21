@@ -179,7 +179,7 @@ class MySQLWrapper(Wrapper):
     #Parameters: ids - list of document ids, state - the int state to assignt to each document
     def update_state(self, ids, state):
         cursor = self.connection.cursor()
-        statement = 'UPDATE main_crawl_document SET state = %s where id in (%s);'
+        statement = 'UPDATE main_crawl_document SET state = %s where id in %s;'
 
         idString = ''
 
@@ -187,7 +187,7 @@ class MySQLWrapper(Wrapper):
             if len(idString) != 0:
                 idString += ','
             idString += str(doc)
-
+        idString = '(' + idString + ')'
         print idString
             
         cursor.execute(statement, (state, idString))
