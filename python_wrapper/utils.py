@@ -25,6 +25,7 @@ def id_to_file_name(ID):
 def id_to_path(ID):
     idString = str(ID).zfill(9)
     path = idString[:3] + '/' + idString[3:6] + '/' + idString[6:] + '/'
+    return path
 
 #expand_path(path)
 #
