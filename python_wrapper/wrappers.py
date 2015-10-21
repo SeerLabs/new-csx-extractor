@@ -146,10 +146,11 @@ class MySQLWrapper(Wrapper):
         cursor.execute(query, (self.startID, self.states['crawled'], self.batchSize))
 
         ids = []
+        docs = cursor.fetchall()
         for doc in cursor.fetchall():
             ids.append(str(doc))
 
-        print ids
+        print docs
 
         self.batch = ids
         cursor.close()
