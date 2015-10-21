@@ -170,7 +170,7 @@ class MySQLWrapper(Wrapper):
     def get_document_paths(self):
         paths = []
         for ID in self.batch:
-            paths.append(utils.id_to_path(ID) + util.id_to_file_name(ID) + '.pdf')
+            paths.append(utils.id_to_path(ID) + utils.id_to_file_name(ID) + '.pdf')
         return paths
 
     #update_state(ids, state)
