@@ -143,7 +143,7 @@ class MySQLWrapper(Wrapper):
         cursor = self.connection.cursor()
         query = 'SELECT id from main_crawl_document WHERE id> %s and state = %s ORDER BY id LIMIT %s;'
 
-        cursor.execute(query, (self.startID, self.states['CRAWLED'], self.batchSize))
+        cursor.execute(query, (self.startID, self.states['crawled'], self.batchSize))
 
         ids = []
         for doc in cursor.fetchall():
