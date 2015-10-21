@@ -31,7 +31,6 @@ def read_results(resultsFilePath, logDirPath):
         if finIndex >= 0:
             fileName = line[finIndex-16:finIndex-1]
             fileID = utils.file_name_to_id(fileName)
-            print fileID
             resultString = line[line.find('[')+1:line.find(']')]
             result = False
             if (resultString == 'SUCCESS'):

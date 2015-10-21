@@ -6,7 +6,7 @@ import os
 #Parameters: fileName - string in xxx.xxx.xxx.pdf format
 def file_name_to_id(fileName):
     ID = (fileName.replace('.', ''))[:-3]
-    #print ID
+    print ID
     return int(ID)
 
 #id_to_file_name(id)
