@@ -150,7 +150,7 @@ class MySQLWrapper(Wrapper):
         for doc in cursor.fetchall():
             ids.append(str(doc))
 
-        print docs
+        print ids
 
         self.batch = ids
         cursor.close()
