@@ -188,6 +188,8 @@ class MySQLWrapper(Wrapper):
                 idString += ','
             idString += str(doc)
 
+        print idString
+            
         cursor.execute(statement, (state, idString))
 
         self.connection.commit()
