@@ -64,11 +64,32 @@ def on_batch_finished(resultsFileDirectory, logFilePath, wrapper, states):
 #get_extraction_runner()
 #
 #Purpose: get the ExtractionRunner object needed to extract documents
+#Parameters: modules - dictionary that contains which modules should be included
 #Returns: ExtractionRunner with added runnables
-def get_extraction_runner():
+def get_extraction_runner(modules):
     runner = ExtractionRunner()
-    runner.add_runnable(pdfbox.PDFBoxPlainTextExtractor)
-    runner.add_runnable(filters.AcademicPaperFilter)
+    if modules['header'] == 'True':
+        if modules['header_grobid'] == 'True':
+            runner.add_runnable(grobid.GrobidHeaderTEIExtractor)
+        if modules['header_tei'] == 'True':
+            runner.add_runnable(tei.TEItoHeaderExtractor)
+    if modules['fulltext'] == 'True':
+        if modules['fulltext_pdfbox'] == 'True':
+            runner.add_runnable(pdfbox.PDFBoxPlainTextExtractor)
+        if modules['fulltext_grobid'] == 'True':
+            runner.add_runnable(grobid.GrobidTEIExtractor)
+    if modules['citation'] == 'True':
+        if modules['citation_parscit'] == 'True':
+            runner.add_runnable(parscit.ParsCitCitationExtractor)
+        if modules['citation_grobid'] == 'True':
+            runner.add_runnable(grobid.GrobidCitationTEIExtractor)
+    if modules['figures'] == 'True':
+        runner.add_runnable(figures.PDFFiguresExtractor)
+    if modules['academicfilter'] == 'True':
+        runner.add_runnable(filters.AcademicPaperFilter)
+    if modules['algorithms'] == 'True':
+        runner.add_runnable(algorithms.AlgorithmsExtractor)
+
     return runner
 
 if __name__ == '__main__':
@@ -77,6 +98,7 @@ if __name__ == '__main__':
     config.read('python_wrapper/properties.config')
     connectionProps = dict(config.items('ConnectionProperties'))
     states = dict(config.items('States'))
+    modules = dict(config.items('Modules'))
     numProcesses = config.getint('ExtractionConfigurations', 'numProcesses')
     maxDocs = config.getint('ExtractionConfigurations', 'maxDocs')
     baseDocumentPath = config.get('ExtractionConfigurations', 'baseDocumentPath')
@@ -96,7 +118,7 @@ if __name__ == '__main__':
     dateBatchNum = 0
     dateFolder = str(date).replace('-', '') + str(dateBatchNum).zfill(2) + '/'
     numDocs = len(glob(baseResultsPath + dateFolder + '*'))
-    runner = get_extraction_runner()
+    runner = get_extraction_runner(modules)
     batchNum = 0
 
     #make sure there is space in dateFolder
