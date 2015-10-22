@@ -71,13 +71,15 @@ def get_extraction_runner(modules):
     if modules['header'] == 'True':
         if modules['header_grobid'] == 'True':
             runner.add_runnable(grobid.GrobidHeaderTEIExtractor)
-        if modules['header_tei'] == 'True':
+        if modules['header_tei_to_csx'] == 'True':
             runner.add_runnable(tei.TEItoHeaderExtractor)
     if modules['fulltext'] == 'True':
         if modules['fulltext_pdfbox'] == 'True':
             runner.add_runnable(pdfbox.PDFBoxPlainTextExtractor)
         if modules['fulltext_grobid'] == 'True':
             runner.add_runnable(grobid.GrobidTEIExtractor)
+        if modules['fulltext_tei_to_csx'] == 'True':
+            runner.add_runnable(tei.TEItoPlainTextExtractor)
     if modules['citation'] == 'True':
         if modules['citation_parscit'] == 'True':
             runner.add_runnable(parscit.ParsCitCitationExtractor)
