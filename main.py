@@ -108,7 +108,7 @@ if __name__ == '__main__':
     #main loop
     stopProcessing = config.getboolean('ExtractionConfigurations', 'stopProcessing')
     moreDocs = True
-    while (not stopProcessing) && moreDocs:
+    while (not stopProcessing) and moreDocs:
         logPath = baseLogPath + dateFolder + 'batch' + str(batchNum)
         runner.enable_logging(logPath, baseLogPath + 'runnables')
         wrapper.get_document_batch()
