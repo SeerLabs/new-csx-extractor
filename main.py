@@ -107,35 +107,39 @@ if __name__ == '__main__':
 
     #main loop
     stopProcessing = config.getboolean('ExtractionConfigurations', 'stopProcessing')
-    while not stopProcessing:
+    moreDocs = True
+    while (not stopProcessing) && moreDocs:
         logPath = baseLogPath + dateFolder + 'batch' + str(batchNum)
         runner.enable_logging(logPath, baseLogPath + 'runnables')
         wrapper.get_document_batch()
         documentPaths = wrapper.get_document_paths()
         ids = wrapper.get_document_ids()
         print ids
-        outputPaths = []
-        files = []
-        prefixes = []
-        for doc in ids:
-            outputPaths.append(baseResultsPath + dateFolder + utils.id_to_file_name(doc) + '/')
-            prefixes.append(utils.id_to_file_name(doc))
-        for path in documentPaths:
-            files.append(baseDocumentPath + path)
+        if len(ids) == 0:
+            moreDocs = False;
+        if moreDocs:
+            outputPaths = []
+            files = []
+            prefixes = []
+            for doc in ids:
+                outputPaths.append(baseResultsPath + dateFolder + utils.id_to_file_name(doc) + '/')
+                prefixes.append(utils.id_to_file_name(doc))
+            for path in documentPaths:
+                files.append(baseDocumentPath + path)
 
-        wrapper.update_state(ids, states['extracting'])
-        runner.run_from_file_batch(files, outputPaths, num_processes=numProcesses, file_prefixes=prefixes)
-        on_batch_finished(logPath, logFilePath, wrapper, states)
+            wrapper.update_state(ids, states['extracting'])
+            runner.run_from_file_batch(files, outputPaths, num_processes=numProcesses, file_prefixes=prefixes)
+            on_batch_finished(logPath, logFilePath, wrapper, states)
 
-        numDocs += int(connectionProps['batchsize'])
-        if numDocs >= maxDocs:
-            dateBatchNum += 1
-            date = str(datetime.now().date())
-            dateFolder = str(date).replace('-', '') + str(dateBatchNum).zfill(2) + '/'
-            numDocs = 0
-            batchNum = 0
-        else:
-            batchNum += 1
+            numDocs += int(connectionProps['batchsize'])
+            if numDocs >= maxDocs:
+                dateBatchNum += 1
+                date = str(datetime.now().date())
+                dateFolder = str(date).replace('-', '') + str(dateBatchNum).zfill(2) + '/'
+                numDocs = 0
+                batchNum = 0
+            else:
+                batchNum += 1
 
         #config = ConfigParser.ConfigParser()
         config.read('python_wrapper/properties.config')
