@@ -16,6 +16,7 @@ urls = (
 '/extractor/file', 'PDFStreamHandler', # For uploading any binary data stream
 '/extractor/(.+)/(header|citations|text|file)', 'Extractor', # For retrieving file information
 '/extractor/(.+)', 'FileHandler', # For deleting a file
+'/hello', 'HelloWorld', #For testing
 
 )
 
@@ -26,6 +27,10 @@ cgi.maxlen = 5 * 1024 * 1024 # 5MB file size limit for uploads
 
 global utilities
 utilities = Util()
+
+class HelloWorld:
+	def GET(self):
+		return 'Hello World!\n'
 	
 class Index:
 	"""Loads the index page from the static dir"""
