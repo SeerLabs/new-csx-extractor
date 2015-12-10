@@ -95,7 +95,7 @@ class Util:
 		result = results[runnable]
 
 	if isinstance(result, RunnableError):
-        error = result.msg
+		error = result.msg
         return error
     elif isinstance(result, ExtractorResult):
         files_dict = result.files
