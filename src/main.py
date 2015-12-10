@@ -68,11 +68,6 @@ def on_batch_finished(resultsFileDirectory, logFilePath, wrapper, states):
 #Returns: ExtractionRunner with added runnables
 def get_extraction_runner(modules):
     runner = ExtractionRunner()
-    if modules['header'] == 'True':
-        if modules['header_grobid'] == 'True':
-            runner.add_runnable(grobid.GrobidHeaderTEIExtractor)
-        if modules['header_tei_to_csx'] == 'True':
-            runner.add_runnable(tei.TEItoHeaderExtractor)
     if modules['fulltext'] == 'True':
         if modules['fulltext_pdfbox'] == 'True':
             runner.add_runnable(pdfbox.PDFBoxPlainTextExtractor)
@@ -80,6 +75,13 @@ def get_extraction_runner(modules):
             runner.add_runnable(grobid.GrobidTEIExtractor)
         if modules['fulltext_tei_to_csx'] == 'True':
             runner.add_runnable(tei.TEItoPlainTextExtractor)
+    if modules['academicfilter'] == 'True':
+        runner.add_runnable(filters.AcademicPaperFilter)
+    if modules['header'] == 'True':
+        if modules['header_grobid'] == 'True':
+            runner.add_runnable(grobid.GrobidHeaderTEIExtractor)
+        if modules['header_tei_to_csx'] == 'True':
+            runner.add_runnable(tei.TEItoHeaderExtractor)
     if modules['citation'] == 'True':
         if modules['citation_parscit'] == 'True':
             runner.add_runnable(parscit.ParsCitCitationExtractor)
@@ -87,8 +89,6 @@ def get_extraction_runner(modules):
             runner.add_runnable(grobid.GrobidCitationTEIExtractor)
     if modules['figures'] == 'True':
         runner.add_runnable(figures.PDFFiguresExtractor)
-    if modules['academicfilter'] == 'True':
-        runner.add_runnable(filters.AcademicPaperFilter)
     if modules['algorithms'] == 'True':
         runner.add_runnable(algorithms.AlgorithmsExtractor)
 
