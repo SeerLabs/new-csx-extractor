@@ -224,6 +224,6 @@ if __name__ == "__main__":
 		
 	os.mkdir(TMP_FOLDER, 0o700)
 		
-	app = web.application(urls, globals()) 
-	app.run()
+	app = web.application(urls, globals()).wsgifunc()
+	#app.run()
 	
