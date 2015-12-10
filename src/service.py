@@ -14,7 +14,7 @@ urls = (
 '/', 'Index',
 '/extractor', 'FileHandler', # For uploading a file
 '/extractor/file', 'PDFStreamHandler', # For uploading any binary data stream
-'/extractor/(.+)/(header|citations|body|text|file|keyphrases)', 'Extractor', # For retrieving file information
+'/extractor/(.+)/(header|citations|text|file)', 'Extractor', # For retrieving file information
 '/extractor/(.+)', 'FileHandler', # For deleting a file
 
 )
