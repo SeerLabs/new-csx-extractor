@@ -6,7 +6,7 @@ import xmltodict
 import json
 import cgi
 import shutil
-from extraction import Extraction
+from extractionWrapper import Extraction
 from utilities import Util
 
 urls = (
