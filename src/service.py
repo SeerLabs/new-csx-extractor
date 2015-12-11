@@ -123,7 +123,7 @@ class Handler(object):	# Super-class for the two handlers
 		return True, typeFilterStatus
 		
 	def printLocations(self, fileid):
-		location = web.ctx.homedomain + '/extractor/pdf/' + fileid
+		location = web.ctx.homedomain + '/extraction/extractor/pdf/' + fileid
 		web.ctx.status = '201 CREATED'
 		web.header('Location', location)
 		web.header('Content-Type','text/xml; charset=utf-8') 
