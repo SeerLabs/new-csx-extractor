@@ -49,7 +49,7 @@ class Extractor:
 		pdffile = TMP_FOLDER + datafile
 		
 		"""Check if the file exists, if not return a 404"""
-		if not os.path.exists(txtfile):
+		if not os.path.exists(pdffile):
 			return web.notfound()
 		
 		try:
