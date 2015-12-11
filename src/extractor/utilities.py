@@ -83,12 +83,12 @@ class Util:
     def printXMLLocations(self, fileid):
         """Returns the URIs for different types of metadata"""
         response = '<token>' + fileid + '</token>'
-        response = response + '<file>' + web.ctx.homedomain + '/extractor/' + fileid + '/file</file>\n'
-        response = response + '<header>' + web.ctx.homedomain + '/extractor/' + fileid + '/header</header>\n'
-        response = response + '<citations>' + web.ctx.homedomain + '/extractor/' + fileid + '/citations</citations>\n'
-        response = response + '<keyphrases>' + web.ctx.homedomain + '/extractor/' + fileid + '/keyphrases</keyphrases>\n'
-        response = response + '<body>' + web.ctx.homedomain + '/extractor/' + fileid + '/body</body>\n'
-        response = response + '<text>' + web.ctx.homedomain + '/extractor/' + fileid + '/text</text>\n'
+        response = response + '<file>' + web.ctx.homedomain + '/extraction/extractor/' + fileid + '/file</file>\n'
+        response = response + '<header>' + web.ctx.homedomain + '/extraction/extractor/' + fileid + '/header</header>\n'
+        response = response + '<citations>' + web.ctx.homedomain + '/extraction/extractor/' + fileid + '/citations</citations>\n'
+        response = response + '<keyphrases>' + web.ctx.homedomain + '/extraction/extractor/' + fileid + '/keyphrases</keyphrases>\n'
+        response = response + '<body>' + web.ctx.homedomain + '/extraction/extractor/' + fileid + '/body</body>\n'
+        response = response + '<text>' + web.ctx.homedomain + '/extraction/extractor/' + fileid + '/text</text>\n'
         return self.printXML(response)
 
     def resultsToString(self, results, runnable):
