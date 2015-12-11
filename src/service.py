@@ -147,6 +147,7 @@ class FileHandler(Handler):
 		try:
 			pdffile = web.input(myfile={})
 			pdfpath = utilities.handleUpload(pdffile)
+			web.debug(pdfpath)
 			passed, message = super(FileHandler, self).fileCheck(pdfpath)
 			if passed is False:
 				web.ctx.status = '400'
