@@ -29,7 +29,7 @@ class Extraction:
         runner.add_runnable(grobid.GrobidHeaderTEIExtractor)
         runnable = grobid.GrobidHeaderTEIExtractor
 
-        results = runner.run_from_file_batch_no_output([path])
+        results = runner.run_from_file_batch_no_output(path)
         resultstxt = self.utilities.resultsToString(results, runnable)
         web.debug(resultstxt)
         return resultstxt
@@ -42,7 +42,7 @@ class Extraction:
         runner.add_runnable(parscit.ParsCitCitationExtractor)
         runnable = parscit.ParsCitCitationExtractor
 
-        results = runner.run_from_file_batch_no_output([path])
+        results = runner.run_from_file_batch_no_output(path)
         resultstxt = self.utilities.resultsToString(results, runnable)
         web.debug(resultstxt)
         return resultstxt
@@ -55,7 +55,7 @@ class Extraction:
 
         web.debug("before extraction")
 
-        results = runner.run_from_file_batch_no_output([path])
+        results = runner.run_from_file_batch_no_output(path)
         resultstxt = self.utilities.resultsToString(results, runnable)
         web.debug(resultstxt)
         return resultstxt
