@@ -62,6 +62,6 @@ class Extraction:
 
     def get_extraction_runner(self):
         runner = ExtractionRunner()
-        #runner.enable_logging('~/logs/service/results', '~/logs/service/runnables')
+        runner.enable_logging('/home/huy138/logs/service/results', '/home/huy138/logs/service/runnables')
 
         return runner
