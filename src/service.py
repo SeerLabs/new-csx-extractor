@@ -12,7 +12,7 @@ from extractor.utilities import Util
 urls = (
 
 '/', 'Index',
-'/extractor', 'FileHandler', # For uploading a file
+'/extractor', 'FileHandler', # For uploading a file 
 '/extractor/file', 'PDFStreamHandler', # For uploading any binary data stream
 '/extractor/(.+)/(header|citations|text|file)', 'Extractor', # For retrieving file information
 '/extractor/(.+)', 'FileHandler', # For deleting a file
