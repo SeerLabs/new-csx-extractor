@@ -47,6 +47,8 @@ class Extractor:
 		extractor = Extraction(utilities)
 		data = ''
 		pdffile = TMP_FOLDER + datafile
+
+		web.debug(pdffile)
 		
 		"""Check if the file exists, if not return a 404"""
 		if not os.path.exists(pdffile):
@@ -147,7 +149,6 @@ class FileHandler(Handler):
 		try:
 			pdffile = web.input(myfile={})
 			pdfpath = utilities.handleUpload(pdffile)
-			web.debug(pdfpath)
 			passed, message = super(FileHandler, self).fileCheck(pdfpath)
 			if passed is False:
 				web.ctx.status = '400'
