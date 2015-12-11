@@ -94,18 +94,18 @@ class Util:
     def resultsToString(self, results, runnable):
         result = results[runnable]
 
-    if isinstance(result, RunnableError):
-        error = result.msg
-        return error
-    elif isinstance(result, ExtractorResult):
-        files_dict = result.files
+        if isinstance(result, RunnableError):
+            error = result.msg
+            return error
+        elif isinstance(result, ExtractorResult):
+            files_dict = result.files
 
-        if result.xml_result is not None:
-           return ET.tostring(result.xml_result, encoding='UTF-8')
+            if result.xml_result is not None:
+               return ET.tostring(result.xml_result, encoding='UTF-8')
 
-        if files_dict:
-            data = ''
-            for file_name, file_data in files_dict.items():
-                data = data + file_data
-            return data
+            if files_dict:
+                data = ''
+                for file_name, file_data in files_dict.items():
+                    data = data + file_data
+                return data
 
