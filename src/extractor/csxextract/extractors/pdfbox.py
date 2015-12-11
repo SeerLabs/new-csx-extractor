@@ -1,6 +1,6 @@
 from extraction.runnables import Extractor, RunnableError, ExtractorResult
-import csxextract.interfaces as interfaces
-import csxextract.config as config
+import extractor.csxextract.interfaces as interfaces
+import extractor.csxextract.config as config
 import extraction.utils
 import subprocess32 as subprocess
 import defusedxml.ElementTree as safeET

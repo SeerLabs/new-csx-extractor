@@ -1,7 +1,7 @@
 from extraction.runnables import Extractor, RunnableError, ExtractorResult
-import csxextract.interfaces as interfaces
-import csxextract.config as config
-import csxextract.filters as filters
+import extractor.csxextract.interfaces as interfaces
+import extractor.csxextract.config as config
+import extractor.csxextract.filters as filters
 import defusedxml.ElementTree as safeET
 import xml.etree.ElementTree as ET
 import xml.sax.saxutils as xmlutils

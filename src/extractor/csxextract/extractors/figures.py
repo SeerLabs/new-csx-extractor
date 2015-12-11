@@ -1,9 +1,9 @@
 from extraction.runnables import Extractor, RunnableError, ExtractorResult
 import extraction.utils
-import csxextract.config as config
-import csxextract.interfaces as interfaces
-import csxextract.filters as filters
-import csxextract.utils as utils
+import extractor.csxextract.config as config
+import extractor.csxextract.interfaces as interfaces
+import extractor.csxextract.filters as filters
+import extractor.csxextract.utils as utils
 import defusedxml.ElementTree as safeET
 import xml.etree.ElementTree as ET
 import subprocess32 as subprocess
