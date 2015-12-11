@@ -221,14 +221,12 @@ class PDFStreamHandler(Handler):
 			web.debug(ex)
 			web.ctx.status = '500'
 			return web.internalerror()
-		
-if __name__ == "__main__":
 
-	if os.path.isdir(TMP_FOLDER): #Create the temp folder
-		shutil.rmtree(TMP_FOLDER)
-		
-	os.mkdir(TMP_FOLDER, 0o700)
-		
-	application = web.application(urls, globals()).wsgifunc()
-	#app.run()
+if os.path.isdir(TMP_FOLDER): #Create the temp folder
+	shutil.rmtree(TMP_FOLDER)
+	
+os.mkdir(TMP_FOLDER, 0o700)
+	
+application = web.application(urls, globals()).wsgifunc()
+#app.run()
 	
