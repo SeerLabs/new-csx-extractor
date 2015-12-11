@@ -23,7 +23,7 @@ class Extraction:
 
     def extractHeaders(self,path):
         """extract headers from pdf file"""
-        runner = get_extraction_runner()
+        runner = self.get_extraction_runner()
         runner.add_runnable(pdfbox.PDFBoxPlainTextExtractor)
         runner.add_runnable(filters.AcademicPaperFilter)
         runner.add_runnable(grobid.GrobidHeaderTEIExtractor)
@@ -36,7 +36,7 @@ class Extraction:
 
     def extractCitations(self,path):
         """extract citations from pdf file"""
-        runner = get_extraction_runner()
+        runner = self.get_extraction_runner()
         runner.add_runnable(pdfbox.PDFBoxPlainTextExtractor)
         runner.add_runnable(filters.AcademicPaperFilter)
         runner.add_runnable(parscit.ParsCitCitationExtractor)
@@ -49,7 +49,7 @@ class Extraction:
 
     def extractText(self, path):
         """extract text from pdf file"""
-        runner = get_extraction_runner()
+        runner = self.get_extraction_runner()
         runner.add_runnable(pdfbox.PDFBoxPlainTextExtractor)
         runnable = pdfbox.PDFBoxPlainTextExtractor
 
