@@ -63,6 +63,6 @@ class Extraction:
     def get_extraction_runner(self):
         runner = ExtractionRunner()
         web.debug('getting runner')
-        runner.enable_logging('/home/huy138/logs/service/results', '/home/huy138/logs/service/runnables')
+        #runner.enable_logging('/home/huy138/logs/service/results', '/home/huy138/logs/service/runnables')
         web.debug('runner gotten')
         return runner
