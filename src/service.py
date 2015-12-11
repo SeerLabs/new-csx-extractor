@@ -47,8 +47,6 @@ class Extractor:
 		extractor = Extraction(utilities)
 		data = ''
 		pdffile = TMP_FOLDER + datafile
-
-		web.debug(pdffile)
 		
 		"""Check if the file exists, if not return a 404"""
 		if not os.path.exists(pdffile):
@@ -64,6 +62,7 @@ class Extractor:
 					data = data + extractor.extractHeaders(pdffile)
 				elif method == 'text':
 					web.header('Content-Type', 'text/text') # Set the Header
+					web.debug("in the if statement")
 					data = data + extractor.extractText(pdffile)
 					return data
 				elif method == 'citations':
