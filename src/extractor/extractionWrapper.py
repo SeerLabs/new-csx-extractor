@@ -53,6 +53,8 @@ class Extraction:
         runner.add_runnable(pdfbox.PDFBoxPlainTextExtractor)
         runnable = pdfbox.PDFBoxPlainTextExtractor
 
+        web.debug("before extraction")
+
         results = runner.run_from_file_batch_no_output([path])
         resultstxt = self.utilities.resultsToString(results, runnable)
         web.debug(resultstxt)
@@ -60,6 +62,6 @@ class Extraction:
 
     def get_extraction_runner(self):
         runner = ExtractionRunner()
-        runner.enable_logging('~/logs/service/results', '~/logs/service/runnables')
+        #runner.enable_logging('~/logs/service/results', '~/logs/service/runnables')
 
         return runner
